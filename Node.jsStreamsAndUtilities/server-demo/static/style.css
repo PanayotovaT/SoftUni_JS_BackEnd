@@ -1,0 +1,31 @@
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif ;
+    font-family: 16px;
+}
+
+body{
+    width: 980px;
+    margin: 0 auto;
+    background-color: azure;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+label span {
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    margin-right: 15px;
+}
+
+input[type="submit"] {
+    margin-left: 165px;
+    width: 150px;
+}
+
+h1 {
+    margin-left: 100px;
+}
