@@ -87,3 +87,17 @@ form input[type="submit"] {
 .promoted {
     color:rgb(184, 87, 8);
 }
+
+li {
+    margin-bottom: 10px;
+    text-align: center;
+    list-style-type: "\2606";
+    list-style-position: outside;
+}
+.btn {
+    text-decoration: none;
+    text-transform: uppercase;
+    border: 1px solid gray;
+    border-radius: 4px;
+    padding: 1px 10px;
+}

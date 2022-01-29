@@ -1,6 +1,6 @@
     {{#if promotion}}
-    <li class="promoted">{{name}} - {{price}}</li>
+    <li class="promoted">{{name}} - {{price}} <a class="btn" href="/catalog/update/{{_id}}">Edit</a> <a class="btn" href="/catalog/delete/{{_id}}">Delete</a></li>
 
     {{else}}
-    <li>{{name}} - {{price}}</li>
+    <li>{{name}} - {{price}} <a class="btn" href="/catalog/update/{{_id}}">Edit</a> <a class="btn" href="/catalog/delete/{{_id}}">Delete</a></li>
     {{/if}}

@@ -1,0 +1,15 @@
+<h1>Edit Product</h1>
+<a href="/catalog" class="catalog">Back to catalog</a>
+<form method="POST" action="/catalog/{{_id}}">
+    <label><span>Product name: </span><input type="text" name="product" value={{name}}></label>
+    <label><span>Price: </span><input type="number" name="price" value={{price}}></label>
+    <label><span>Promotion: </span>
+    {{#if promotion}}
+    <input type="checkbox" class="checkbox" name="promotion" checked>
+    {{else}}
+    <input type="checkbox" class="checkbox" name="promotion">
+
+    {{/if}}
+    </label>
+    <input type="submit" value="Update">
+</form>
