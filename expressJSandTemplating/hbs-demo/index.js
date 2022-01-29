@@ -3,6 +3,8 @@ const handlebars = require('express-handlebars')
 
 const hbs = handlebars.create({
     extname: '.hbs',
+    // layoutsDir: '..',
+    // partialsDir: '..'
 });
 
 app.engine('.hbs', hbs.engine);
@@ -10,7 +12,7 @@ app.set('view engine', '.hbs');
 
 let visitors = 0;
 const products = [
-    {name: 'Widget', price:46},
+    {name: 'Widget', price:46 , promoted: true},
     {name: 'Gadget', price:105},
     {name: 'Fluxor', price:33},
 ];
@@ -18,6 +20,10 @@ const products = [
 app.get('/', (req, res) => {
     res.locals = {
         count: visitors++,
+        user: {
+            name: 'peter',
+            email: 'peter@abv.bg'
+        }
     };
     res.render('home');
 });
