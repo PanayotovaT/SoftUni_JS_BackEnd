@@ -15,6 +15,7 @@ app.engine('.hbs', hbs.create({
 }).engine);
 app.set('view engine', '.hbs');
 
+app.use(express.urlencoded({extended: true}))
 app.use('/content', express.static('static'));
 
 app.get('/', homeController);

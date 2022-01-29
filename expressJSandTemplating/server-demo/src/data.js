@@ -17,7 +17,7 @@ async function getProductById(id) {
 
 }
 
-async function createPrpduct(item) {
+async function createProduct(item) {
     const data = await readFile();
     const _id = nextId();
     data[_id] = item;
@@ -36,7 +36,7 @@ function nextId() {
 
 module.exports = {
     getProducts,
-    createPrpduct,
+    createProduct,
     getProductById,
     updateProduct
 }

@@ -38,3 +38,52 @@ nav li:hover {
 .italic{
     font-style: italic;
 }
+
+.catalog {
+    text-decoration: none;
+    text-transform: uppercase;
+    color: chocolate;
+}
+
+.catalog:hover {
+    background-color: white;
+    color: rgb(82, 37, 82);
+}
+
+form {
+    margin-top: 30px;
+    position: relative;
+}
+form label {
+    display: block;
+    margin: 10px auto;
+    width: 400px;
+}
+
+form label span {
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+form label input {
+    display: inline-block;
+    width: 200px;
+}
+
+form input[type="submit"] {
+    width: 100px;
+    position: relative;
+    left: 30px;
+    text-transform: uppercase;
+}
+
+.checkbox{
+    position: relative;
+    left: -93px;
+}
+
+.promoted {
+    color:rgb(184, 87, 8);
+}
