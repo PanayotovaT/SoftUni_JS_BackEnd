@@ -1,0 +1,40 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgb(250, 249, 249);
+    width: 980px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+nav li {
+   display: inline-block;
+    list-style-type: none;
+   margin-right: 20px;
+    border: 1px solid darkgray;
+    border-radius: 8px;
+    box-shadow: 0 0 3px 1px gray;
+    padding: 4px 15px;
+    background-color:  rgb(194, 168, 219);
+    text-align: center;
+
+}
+
+nav li a{
+    text-decoration: none;
+    text-transform: uppercase;
+    color: rgb(74, 21, 100);
+    font-weight: bold;
+}
+
+nav li:hover {
+ 
+    /* color: rgb(74, 21, 100); */
+    background-color: white;
+}
+
+.italic{
+    font-style: italic;
+}

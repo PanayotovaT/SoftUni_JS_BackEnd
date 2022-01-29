@@ -1,0 +1,10 @@
+<h1>Catalog Page</h1>
+<p>Products:</p>
+
+<ul>
+    {{#each products}}
+    <li>{{name}} - {{price}}</li>
+    {{else}}
+    <span class="italics">No products in database!</span>
+    {{/each}}
+</ul>
