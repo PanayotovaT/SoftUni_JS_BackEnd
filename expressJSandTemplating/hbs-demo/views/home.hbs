@@ -1,2 +1,7 @@
-<h1>Hello, handebars!</h1>
-<p>Welcome to the site!</p>
+    <h1>Hello, handebars!</h1>
+    <p>Welcome to the site!</p>
+    {{#if count}}
+    <p>Site visited {{count}} times</p>
+    {{else}}
+    <p>You are the first visitor.</p>
+    {{/if}}
