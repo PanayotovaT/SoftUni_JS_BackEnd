@@ -9,7 +9,6 @@ module.exports = {
     },
     async post(req,res){
         const id = req.params.id;
-        console.log(req.body);
         const updatedCar = {
             name: req.body.name,
             description: req.body.description,
