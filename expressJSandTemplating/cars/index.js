@@ -4,7 +4,7 @@ const hbs = require('express-handlebars');
 const carsService = require('./services/cars');
 
 const { about } = require('./controllers/about');
-const { create } = require('./controllers/create');
+const create = require('./controllers/create');
 const { details } = require('./controllers/details');
 const { home } = require('./controllers/home');
 const { notFound } = require('./controllers/notFound');
@@ -23,7 +23,8 @@ app.use(carsService());
 
 app.get('/', home);
 app.get('/about', about);
-app.get('/create', create);
+app.get('/create', create.get);
+app.post('/create', create.post);
 app.get('/details/:id', details);
 
 app.all('*', notFound);
