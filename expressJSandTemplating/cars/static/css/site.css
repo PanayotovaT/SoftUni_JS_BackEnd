@@ -241,6 +241,10 @@ h2{
     padding: 10px;
 }
 
+input[type="submit"] {
+    width: 60%;
+}
+
 footer {
     background: #607588;
     padding: 1em;
