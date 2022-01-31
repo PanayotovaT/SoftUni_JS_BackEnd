@@ -242,9 +242,23 @@ h2{
 }
 
 input[type="submit"] {
-    width: 60%;
+    width: 43%;
 }
 
+#btns a {
+ width: 33%;
+}
+#btns a.edit {
+    margin-left: 0px;
+}
+
+.edit-div .edit-btn {
+    margin-left: 0px;
+}
+
+.delete-div .del-btn {
+    margin-left: 0px;
+}
 footer {
     background: #607588;
     padding: 1em;
