@@ -229,6 +229,18 @@ h2{
     text-align: center;
 }
 
+.more {
+    font-size: 14px;
+}
+
+.description {
+    display: none;
+}
+
+.show-more {
+    padding: 10px;
+}
+
 footer {
     background: #607588;
     padding: 1em;
