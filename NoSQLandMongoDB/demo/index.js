@@ -23,23 +23,14 @@
 
 const mongoose = require('mongoose');
 
+// const Car = require('./models/Car');
+require('./models/Car');
+const Car = mongoose.model('Car');
+//these are equals;
+
+
 const connectionString = 'mongodb://127.0.0.1:27017/test';
 
-
-const carSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    price: { type: Number, default: 1000 }
-});
-
-carSchema.methods.startEngine = function(){
-    console.log(`${this.name} goes Vroom!`);
-}
-
-carSchema.virtual('VAT').get(function(){
-    return this.price * 0.2;
-});
-
-const Car = mongoose.model('Car', carSchema);
 
 
 start();
@@ -53,15 +44,38 @@ async function start() {
     console.log('Database connected!');
 
 
+    // try {
 
-    // const car = new Car({
-    //     name: 'Ford',
-    //     // price: 25000
-    // });
+    //     const car = new Car({
+    //         price: 30000
+    //     });
+    //     await car.save();
+    // } catch (err) {
+    //     // console.log(err.message);
+    //     // console.log(err._message);
+    //     // console.log(err.errors);
+    // }
+    // const data = await Car.find({});
+    // data.forEach(x => x.startEngine());
+    // data.forEach(x => console.log(x.VAT));
+    // const car =  await Car.findOne({name: 'Mitsubishi'});
+    // const car =  await Car.findById('61fba7d3db85e93c6f5d223a');
+    // console.log(car);
+    // car.price = 21000;
     // await car.save();
 
-    const data = await Car.find({});
-    console.log(data);
-    data.forEach(x => x.startEngine());
-    data.forEach(x => console.log(x.VAT));
+    // const data =  await Car.find({price: {$gte: 30000 , $lte: 50000}});
+    // console.log(data);
+
+    // await Car.findByIdAndUpdate('61fba7d3db85e93c6f5d223a', {price: 34000})
+
+    // console.log(await Car.countDocuments({price:{$gte: 30000}}))
+
+    // console.log((await Car.find({}).select('name price')));
+    console.log(await Car.find({}).select('price').sort({price: -1}));
+
+    console.log(await Car.find({}).skip(10).limit(10));
+    //This is pagination
+
+    console.log(await Car.find({}).where('price').gt(30000).lt(40000));
 }
