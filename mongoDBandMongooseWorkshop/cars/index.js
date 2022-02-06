@@ -1,6 +1,8 @@
 const express = require('express');
 const hbs = require('express-handlebars');
 
+const initDb = require('./models/index');
+
 const carsService = require('./services/cars');
 
 const { about } = require('./controllers/about');
@@ -11,6 +13,11 @@ const { notFound } = require('./controllers/notFound');
 const deleteCar = require('./controllers/delete');
 const edit = require('./controllers/edit');
 
+start();
+async function start() {
+    await initDb();
+
+}
 const app = express();
 
 
@@ -40,14 +47,6 @@ app.listen(3000, () => {
     console.log('Server listening on port 3000');
 });
 
-
-
-//initialize and configure app
-//initialize templating lib
-//create home controller
-//bind routing
-//create  data service
-//implement controllers
 
 
 
