@@ -1,29 +1,4 @@
-const fs = require('fs/promises');
 const Car = require('../models/Car');
-
-const filePath = './services/data.json';
-
-async function read() {
-    try {
-        const file = await fs.readFile(filePath);
-        return JSON.parse(file);
-    } catch (err) {
-        console.error('Database read error');
-        console.error(err);
-        process.exit(1);
-        // This kills the app
-    }
-}
-
-async function write(data) {
-    try {
-        await fs.writeFile(filePath, JSON.stringify(data, null, 2));
-    } catch (err) {
-        console.error('Database write error');
-        console.error(err);
-        process.exit(1);
-    }
-}
 
 function carViewModel(car) {
     return {
@@ -74,6 +49,7 @@ async function createCar(car) {
 
 async function updateCar(id, updatedCar) {
     await Car.findByIdAndUpdate(id, updatedCar);
+
 }
 
 async function deleteCar(id) {
@@ -81,10 +57,6 @@ async function deleteCar(id) {
 
 }
 
-
-function nextId() {
-    return 'xxxxxxxx'.replace(/x/g, () => (Math.random() * 16 | 0).toString(16));
-}
 
 module.exports = () => (req, res, next) => {
     req.storage = {
