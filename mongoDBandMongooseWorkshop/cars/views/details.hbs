@@ -1,0 +1,17 @@
+<h1>
+  {{name}}
+</h1>
+<img class="cube" src="/static/images/{{imageUrl}}" />
+<div class="details">
+  <p><span>Description:</span>
+    {{description}}
+  </p>
+  <p><span>Price:</span>
+    {{price}}
+  </p>
+  <div id="btns">
+    <a class="btn" href="/">Back</a>
+    <a class="btn edit" href="/edit/{{id}}">Edit</a>
+    <a class="btn" href="/delete/{{id}}">Delete</a>
+  </div>
+</div>
