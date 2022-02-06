@@ -35,69 +35,44 @@ function carViewModel(car) {
     }
 }
 async function getAll(query) {
-
-    const cars = await Car.find({});
-    return cars.map(carViewModel);
-    /*
-    const data = await read();
-    let cars = Object
-        .entries(data)
-        .map(([id, v]) => Object.assign({}, { id }, v));
+    const options = {};
 
     if (query.search) {
-        cars = cars
-            .filter(c => {
-                return c.name.toLocaleLowerCase()
-                       .includes(query.search.toLocaleLowerCase())
-            });
+        options.name = new RegExp(query.search, 'i');
     }
-    if(query.from) {
-        cars = cars
-                .filter(c => c.price >= Number(query.from));
+    if (query.from) {
+        options.price = { $gte: Number(query.from) }
     }
-    if(query.to) {
-        cars = cars
-                .filter(c => c.price <= Number(query.to));
+    if (query.to) {
+        if (!options.price) {
+            options.price = {}
+        }
+        options.price.$lte = Number(query.to);
     }
+    console.log(options);
 
-    return cars;
-    */
+    const cars = await Car.find(options);
+    return cars.map(carViewModel);
+
 }
 
 async function getOne(id) {
-    const car =  await Car.findById(id);
-    if(car){
+    const car = await Car.findById(id);
+    if (car) {
         return carViewModel(car)
     } else {
         return undefined;
     }
-    // const data = await read();
-    // const car = data[id];
-    // if (car) {
-    //     return Object.assign({}, { id }, { ...car });
-    // } else {
-    //     return undefined;
-    // }
 }
 
 async function createCar(car) {
 
-    const result  =  new Car(car);
+    const result = new Car(car);
     await result.save();
-    
-    /*
-    const cars = await read();
-    let id;
-    do {
-        id = nextId();
-    } while (cars.hasOwnProperty(id));
 
-    cars[id] = car;
-    await write(cars);
-    */
 }
 
-async function updateCar(id, updatedCar){
+async function updateCar(id, updatedCar) {
     const data = await read();
 
     if (data.hasOwnProperty(id)) {
