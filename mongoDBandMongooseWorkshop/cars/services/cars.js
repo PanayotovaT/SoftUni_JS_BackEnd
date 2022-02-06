@@ -73,14 +73,7 @@ async function createCar(car) {
 }
 
 async function updateCar(id, updatedCar) {
-    const data = await read();
-
-    if (data.hasOwnProperty(id)) {
-        data[id] = updatedCar;
-        await write(data);
-    } else {
-        throw new ReferenceError('No such id in the database!');
-    }
+    await Car.findByIdAndUpdate(id, updatedCar);
 }
 
 async function deleteCar(id) {
