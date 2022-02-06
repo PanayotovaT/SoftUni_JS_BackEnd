@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Car = require('./Car');
+require('./Car');
 
 const connectionString = 'mongodb://127.0.0.1:27017/test';
 
@@ -13,6 +13,7 @@ async function init() {
     });
 
     console.log('Database connected');
+
     mongoose.connection.on('error', (err) => {
         console.log('Database error.');
         console.log(err);

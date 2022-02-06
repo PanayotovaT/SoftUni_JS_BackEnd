@@ -1,4 +1,5 @@
 const fs = require('fs/promises');
+const Car = require('../models/Car');
 
 const filePath = './services/data.json';
 
@@ -25,6 +26,16 @@ async function write(data) {
 }
 
 async function getAll(query) {
+
+    const cars = await Car.find({});
+    return cars.map(car => ({
+        name: car.name,
+        description: car.description,
+        imageUrl: car.imageUrl,
+        price: car.price,
+        id: car._id
+    }));
+    /*
     const data = await read();
     let cars = Object
         .entries(data)
@@ -47,6 +58,7 @@ async function getAll(query) {
     }
 
     return cars;
+    */
 }
 
 async function getOne(id) {
