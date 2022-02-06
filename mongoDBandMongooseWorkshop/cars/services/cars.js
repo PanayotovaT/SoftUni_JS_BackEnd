@@ -25,16 +25,19 @@ async function write(data) {
     }
 }
 
-async function getAll(query) {
-
-    const cars = await Car.find({});
-    return cars.map(car => ({
+function carViewModel(car) {
+    return {
         name: car.name,
         description: car.description,
         imageUrl: car.imageUrl,
         price: car.price,
         id: car._id
-    }));
+    }
+}
+async function getAll(query) {
+
+    const cars = await Car.find({});
+    return cars.map(carViewModel);
     /*
     const data = await read();
     let cars = Object
@@ -62,13 +65,19 @@ async function getAll(query) {
 }
 
 async function getOne(id) {
-    const data = await read();
-    const car = data[id];
-    if (car) {
-        return Object.assign({}, { id }, { ...car });
+    const car =  await Car.findById(id);
+    if(car){
+        return carViewModel(car)
     } else {
         return undefined;
     }
+    // const data = await read();
+    // const car = data[id];
+    // if (car) {
+    //     return Object.assign({}, { id }, { ...car });
+    // } else {
+    //     return undefined;
+    // }
 }
 
 async function createCar(car) {
