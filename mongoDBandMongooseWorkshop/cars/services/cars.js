@@ -1,3 +1,4 @@
+const { findById } = require('../models/Car');
 const Car = require('../models/Car');
 
 function carViewModel(car) {
@@ -47,8 +48,13 @@ async function createCar(car) {
 
 }
 
-async function updateCar(id, updatedCar) {
-    await Car.findByIdAndUpdate(id, updatedCar);
+async function updateCar(id, car) {
+    let existing = await Car.findById(id);
+    existing.name = car.name;
+    existing.description = car.description;
+    existing.imageUrl = car.imageUrl;
+    existing.price = car.price;
+    await existing.save();
 
 }
 

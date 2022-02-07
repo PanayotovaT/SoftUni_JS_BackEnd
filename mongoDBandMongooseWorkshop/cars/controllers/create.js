@@ -4,14 +4,18 @@ module.exports = {
     },
 
     async post(req, res) {
-        console.log(req.body);
         const car = {
             name: req.body.name,
             description: req.body.description,
             price: Number(req.body.price),
             imageUrl: req.body.imageUrl,
         }
+        try{
         await req.storage.createCar(car);
         res.redirect('/');
+        } catch(err) {
+            console.log('Error createing!')
+            res.redirect('/create');
+        }
     }
 }

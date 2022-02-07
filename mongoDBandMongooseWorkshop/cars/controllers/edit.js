@@ -19,7 +19,8 @@ module.exports = {
             await req.storage.updateCar(id, updatedCar);
             res.redirect('/');
         }catch(err) {
-            console.log(err);
+            console.log('The error is: ' + err.message);
+            res.redirect(`/edit/${id}`); 
         }
     }
 }
