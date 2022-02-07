@@ -1,15 +1,7 @@
-const { findById } = require('../models/Car');
 const Car = require('../models/Car');
+const { carViewModel } = require('./util');
 
-function carViewModel(car) {
-    return {
-        name: car.name,
-        description: car.description,
-        imageUrl: car.imageUrl,
-        price: car.price,
-        id: car._id
-    }
-}
+
 async function getAll(query) {
     const options = {};
 
@@ -33,7 +25,7 @@ async function getAll(query) {
 }
 
 async function getOne(id) {
-    const car = await Car.findById(id);
+    const car = await Car.findById(id).populate('accessories');
     if (car) {
         return carViewModel(car)
     } else {
@@ -54,7 +46,16 @@ async function updateCar(id, car) {
     existing.description = car.description;
     existing.imageUrl = car.imageUrl || undefined;
     existing.price = car.price;
+    existing.accessories = car.accessories;
     await existing.save();
+
+}
+
+async function attachAccessory(carId, accessoryId) {
+    let existing = await Car.findById(carId);
+    existing.accessories.push(accessoryId);
+    await existing.save();
+
 
 }
 
@@ -70,7 +71,8 @@ module.exports = () => (req, res, next) => {
         getOne,
         createCar,
         deleteCar,
-        updateCar
+        updateCar,
+        attachAccessory
     };
     next();
 }
