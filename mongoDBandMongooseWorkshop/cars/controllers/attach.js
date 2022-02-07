@@ -1,26 +1,29 @@
-module.exports  = {
-    async get(req, res){
-        const id  = req.params.id;
+module.exports = {
+    async get(req, res) {
+        const id = req.params.id;
         try {
-            const [car, accessories ]=  await Promise.all([
+            const [car, accessories] = await Promise.all([
                 req.storage.getOne(id),
                 req.accessory.getAll()
-            
+
             ]);
 
-            res.render('attach', {title: 'Attach accessory', car, accessories})
-        } catch(err) {
+            const existingIds = car.accessories.map(a => a.id.toString());
+            const availableAccessories = accessories.filter(a => existingIds.includes(a.id.toString()) == false);
+
+            res.render('attach', { title: 'Attach accessory', car, accessories: availableAccessories })
+        } catch (err) {
             console.log(err);
             res.redirect('/404')
         }
     },
-    async post(req, res){
+    async post(req, res) {
         const carId = req.params.id;
         const accessoryId = req.body.accessory;
-        try{
+        try {
             await req.storage.attachAccessory(carId, accessoryId);
-            res.redirect('/')
-        }catch(err) {
+            res.redirect(`/details/${carId}`);
+        } catch (err) {
             console.log(err);
             res.redirect('/attach/' + carId);
         }
