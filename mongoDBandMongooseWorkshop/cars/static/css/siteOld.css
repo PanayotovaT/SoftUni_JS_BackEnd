@@ -11,7 +11,7 @@ header ul {
 }
 
 img {
-    height: 200px;
+    height: 150px;
     width: auto;
 }
 
@@ -90,31 +90,21 @@ p.name {
     border-bottom: 1px solid #2b415433;
 }
 
-
 button, main a.btn {
     border: none;
     padding: 8px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
-    width: 38%;
+    font-size: 18px;
+    width: 43%;
     margin: 12px;
+    margin-left: 6%;
     border-radius: 4px;
     background: #607588;
     color: white;
 }
-.edit-btn:first-child {
-    margin: 5px;
-    width: 50%;
-    font-size: 16px;
-}
-.edit-btn:nth-child(2) {
-    margin: 5px;
-    width: 45%;
-    font-size: 16px;
 
-}
 button:hover {
     background-color: #0B2133;
     color: white;
@@ -239,19 +229,36 @@ h2{
     text-align: center;
 }
 
-.accessories .accessory{
-    display: inline-block;
-    background-color: #f3f3f2;
-    width: 20%;
-    padding: 1%;
-    margin: 1%;
+.more {
+    font-size: 14px;
 }
 
-.accessories, .italic{
-    text-align: center;
-    font-style: italic;
+.description {
+    display: none;
 }
 
+.show-more {
+    padding: 10px;
+}
+
+input[type="submit"] {
+    width: 43%;
+}
+
+#btns a {
+ width: 33%;
+}
+#btns a.edit {
+    margin-left: 0px;
+}
+
+.edit-div .edit-btn {
+    margin-left: 0px;
+}
+
+.delete-div .del-btn {
+    margin-left: 0px;
+}
 footer {
     background: #607588;
     padding: 1em;

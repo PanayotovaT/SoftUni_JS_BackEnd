@@ -8,7 +8,7 @@ module.exports = {
             name: req.body.name,
             description: req.body.description,
             price: Number(req.body.price),
-            imageUrl: req.body.imageUrl,
+            imageUrl: req.body.imageUrl || undefined,
         }
         try{
         await req.storage.createCar(car);

@@ -25,7 +25,7 @@ async function getAll(query) {
         }
         options.price.$lte = Number(query.to);
     }
-    console.log(options);
+   
 
     const cars = await Car.find(options);
     return cars.map(carViewModel);
@@ -52,7 +52,7 @@ async function updateCar(id, car) {
     let existing = await Car.findById(id);
     existing.name = car.name;
     existing.description = car.description;
-    existing.imageUrl = car.imageUrl;
+    existing.imageUrl = car.imageUrl || undefined;
     existing.price = car.price;
     await existing.save();
 

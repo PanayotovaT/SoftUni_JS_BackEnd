@@ -4,6 +4,7 @@ const hbs = require('express-handlebars');
 const initDb = require('./models/index');
 
 const carsService = require('./services/cars');
+const accessoryService = require('./services/accessory');
 
 const { about } = require('./controllers/about');
 const create = require('./controllers/create');
@@ -12,6 +13,7 @@ const { home } = require('./controllers/home');
 const { notFound } = require('./controllers/notFound');
 const deleteCar = require('./controllers/delete');
 const edit = require('./controllers/edit');
+const accessory = require('./controllers/accessory');
 
 start();
 async function start() {
@@ -29,6 +31,7 @@ app.set('view engine', 'hbs');
 app.use(express.urlencoded({extended: true}));
 app.use('/static', express.static('static'));
 app.use(carsService());
+app.use(accessoryService());
 
 app.get('/', home);
 app.get('/about', about);
@@ -40,7 +43,10 @@ app.route('/delete/:id')
     .post(deleteCar.post)
 app.route('/edit/:id')
     .get(edit.get)
-    .post(edit.post)
+    .post(edit.post);
+app.route('/accessory')
+    .get(accessory.get)
+    .post(accessory.post);
 app.all('*', notFound);
 
 app.listen(3000, () => {

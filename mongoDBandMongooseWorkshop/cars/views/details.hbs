@@ -11,7 +11,25 @@
   </p>
   <div id="btns">
     <a class="btn" href="/">Back</a>
+    <a class="btn" href="/attach/{{id}}">Attach Accessory</a>
     <a class="btn edit" href="/edit/{{id}}">Edit</a>
     <a class="btn" href="/delete/{{id}}">Delete</a>
   </div>
 </div>
+{{#if accessory}}
+<h2>Accessories</h2>
+<div class="accessories">
+
+  <div class="accessory">
+    <img src="https://images-na.ssl-images-amazon.com/images/I/61J8UP8pySL._SX425_.jpg" alt="stickerName">
+    <h3>Accessory Name</h3>
+    <p>Accessory Description</p>
+  </div>
+  <div class="accessory">
+    <img src="https://images-na.ssl-images-amazon.com/images/I/61J8UP8pySL._SX425_.jpg" alt="stickerName">
+    <h3>Accessory Name</h3>
+    <p>Accessory Description</p>
+  </div>
+  <h3 class="italic">This cube has no accessories yet...</h3>
+</div>
+{{/if}}
