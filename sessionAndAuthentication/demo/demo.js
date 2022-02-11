@@ -43,8 +43,19 @@ app.post('/login', (req, res) => {
     res.redirect('/')
 });
 
-app.get('/register', (rrq, res) => {
+app.get('/register', (req, res) => {
     res.sendFile(__dirname + '/register.html');
+});
+
+app.post('/register', (req, res) => {
+    console.log(req.body);
+    const user = {
+        username: req.body.username,
+        password: req.body.password,
+    }
+    user[req.session.username] = user;
+    console.log('Register successfull', req.session)
+    res.redirect('/')
 })
 
 app.listen(3000);
