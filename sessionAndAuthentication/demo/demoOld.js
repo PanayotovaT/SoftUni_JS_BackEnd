@@ -1,6 +1,4 @@
 const express = require('express');
-// const cookieParser = require('cookie-parser');
-const expressSession =  require('express-session')
 
 const app = express();
 
@@ -9,6 +7,14 @@ const sessions = {};
 
 
 function mySession(req, res, next) {
+    /* if(req.headers.cookie) {
+        console.log('>>>', req.headers.cookie);
+        visited =Number(req.headers.cookie.split('=')[1]);
+        visited++;
+    }
+    res.setHeader('Set-Cookie', `visited=${visited}; httpOnly`);
+    */
+    //  res.setHeader('Set-Cookie', `visited=${visited}; httpOnly`);
 
 
     const cookies = (req.headers.cookie || '')
@@ -35,25 +41,9 @@ function mySession(req, res, next) {
 next()
 }
 
-// app.use(mySession);
-// app.use(cookieParser());
-app.use(expressSession({
-    secret: 'super secret',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: 'auto'}
-}))
-
+app.use(mySession)
 app.get('/', (req, res) => {
-    // console.log(req.cookies);
-    // res.send(`<p>Hello</p><p>You have visisted this page ${req.session.visited} times.</p>`);
-    // res.cookie('CookieParser_Cookie', 'hello')
-    if(req.session.visited) {
-        req.session.visited++;
 
-    } else {
-        req.session.visited = 1;
-    }
     res.send(`<p>Hello</p><p>You have visisted this page ${req.session.visited} times.</p>`);
 })
 
