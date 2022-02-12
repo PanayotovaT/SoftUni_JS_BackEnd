@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const users = {
     'sofi': {
         username: 'sofi',
@@ -6,7 +7,7 @@ const users = {
 };
 
 module.exports = () => {
-   return (req, res, next) => {
+    return (req, res, next) => {
         req.auth = {
             login,
             register
@@ -25,13 +26,18 @@ module.exports = () => {
         }
 
         function register(username, password) {
-            const user = {
-                username: username,
-                password: password,
+            if (users[username] != undefined) {
+                return false;
+            } else {
+
+                const user = {
+                    username: username,
+                    password: password,
+                }
+                users[username] = user;
+                console.log('Register successfull', 'Welcome, ', username);
+                return true;
             }
-            users[username] = user;
-            console.log('Register successfull', 'Welcome, ', username);
-            return true;
         }
     }
 }
