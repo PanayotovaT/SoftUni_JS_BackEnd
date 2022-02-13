@@ -22,11 +22,19 @@ module.exports = {
     },
     loginGet(req, res){
         res.render('login', { title: 'Login Page'})
-
+        
     },
-    loginPost(req, res){
+    async loginPost(req, res){
         console.log(req.body);
-        res.redirect('/')
+        try {
+            await req.auth.login(req.body.username, req.body.password);
+           
+            return res.redirect('/');
+            
+        }catch(err) {
+            console.log(err.message);
+            res.redirect('/login');
+        }
     },
     logoutGet(req, res){
         res.redirect('/');
