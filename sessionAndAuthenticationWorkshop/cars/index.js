@@ -5,6 +5,7 @@ const initDb = require('./models/index');
 
 const carsService = require('./services/cars');
 const accessoryService = require('./services/accessory');
+const authService = require('./services/auth');
 
 const { about } = require('./controllers/about');
 const create = require('./controllers/create');
@@ -34,6 +35,7 @@ app.use(express.urlencoded({extended: true}));
 app.use('/static', express.static('static'));
 app.use(carsService());
 app.use(accessoryService());
+app.use(authService());
 
 app.get('/', home);
 app.get('/about', about);
