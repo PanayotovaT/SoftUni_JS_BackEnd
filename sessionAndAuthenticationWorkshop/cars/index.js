@@ -18,6 +18,7 @@ const edit = require('./controllers/edit');
 const accessory = require('./controllers/accessory');
 const attach = require('./controllers/attach');
 const { loginGet, loginPost, registerGet, registerPost, logoutGet } = require('./controllers/auth');
+const { isLoggedIn } = require('./services/util');
 
 start();
 async function start() {
@@ -46,29 +47,29 @@ app.use(authService());
 
 app.get('/', home);
 app.get('/about', about);
-app.get('/create', create.get);
-app.post('/create', create.post);
+app.get('/create', isLoggedIn(), create.get);
+app.post('/create', isLoggedIn(), create.post);
 app.get('/details/:id', details);
 app.route('/delete/:id')
-    .get(deleteCar.get)
-    .post(deleteCar.post)
+    .get(isLoggedIn(), deleteCar.get)
+    .post(isLoggedIn(),deleteCar.post)
 app.route('/edit/:id')
-    .get(edit.get)
-    .post(edit.post);
+    .get(isLoggedIn(), edit.get)
+    .post(isLoggedIn(), edit.post);
 app.route('/accessory')
-    .get(accessory.get)
-    .post(accessory.post);
+    .get(isLoggedIn(), accessory.get)
+    .post(isLoggedIn(), accessory.post);
 
 app.route('/attach/:id')
-    .get(attach.get)
-    .post(attach.post);
+    .get(isLoggedIn(),attach.get)
+    .post(isLoggedIn(), attach.post);
 app.route('/login')
     .get(loginGet)
     .post(loginPost);
 app.route('/register')
     .get(registerGet)
     .post(registerPost);
-app.get(logoutGet);
+app.get('/logout', logoutGet);
 
 app.all('*', notFound);
 
