@@ -1,0 +1,21 @@
+<h1>Edit Listing</h1>
+<div class="form">
+  <form action="/edit/{{id}}" method="POST">
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" value="{{name}}" >
+    <label for="name"> Description</label>
+    <textarea id="name" name="description" >{{description}}</textarea>
+    <label for="image">
+      ImageUrl
+    </label>
+    <input type="text" id="image" name="imageUrl" value="{{imageUrl}}" >
+    <label for="price">
+      Price
+    </label>
+    <input type="number" id="price" name="price" value="{{price}}" >
+    <div class="edit-div">
+    <input type="submit" class="btn edit-btn " value="Update">
+    <a class="btn edit-btn" href="/details/{{id}}">Back</a>
+    </div>
+  </form>
+</div>

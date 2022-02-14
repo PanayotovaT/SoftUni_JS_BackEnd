@@ -1,0 +1,28 @@
+<h1>
+  {{name}}
+</h1>
+<img class="cube" src="/static/images/{{imageUrl}}" />
+<div class="details">
+  <p><span>Description:</span>
+    {{description}}
+  </p>
+  <p><span>Price:</span>
+    {{price}}
+  </p>
+  <div id="btns">
+    <a class="btn" href="/">Back</a>
+    {{#if isOwner}}
+    <a class="btn" href="/attach/{{id}}">Attach Accessory</a>
+    <a class="btn edit" href="/edit/{{id}}">Edit</a>
+    <a class="btn" href="/delete/{{id}}">Delete</a>
+    {{/if}}
+  </div>
+</div>
+<h2>Accessories</h2>
+<div class="accessories">
+  {{#each accessories }}
+  {{> accessoryPreview}}
+  {{else}}
+  <h3 class="italic">This vehicle has no accessories yet...</h3>
+  {{/each}}
+</div>
