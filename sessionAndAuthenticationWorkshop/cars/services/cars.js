@@ -41,14 +41,20 @@ async function createCar(car) {
     await result.save();
 }
 
-async function updateCar(id, car) {
+async function updateCar(id, car, ownerId) {
     let existing = await Car.findById(id).where({isDeleted: false});
+    
+    if(existing.owner != ownerId) {
+        return false;
+    }
+    
     existing.name = car.name;
     existing.description = car.description;
     existing.imageUrl = car.imageUrl || undefined;
     existing.price = car.price;
     existing.accessories = car.accessories;
     await existing.save();
+    return true;
 
 }
 

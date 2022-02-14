@@ -7,6 +7,8 @@ function accessoryViewModel(accessory) {
         imageUrl: accessory.imageUrl,
         price: accessory.price,
         id: accessory._id,
+        owner: accessory.owner
+
     };
 }
 
@@ -17,7 +19,8 @@ function carViewModel(car) {
         imageUrl: car.imageUrl,
         price: car.price,
         id: car._id,
-        accessories: car.accessories
+        accessories: car.accessories,
+        owner: car.owner 
     }
     if(model.accessories.length > 0 && model.accessories[0].name) {
         model.accessories = model.accessories.map(accessoryViewModel);
