@@ -4,11 +4,13 @@ module.exports = {
     },
 
     async post(req, res) {
+
         const car = {
             name: req.body.name,
             description: req.body.description,
             price: Number(req.body.price),
             imageUrl: req.body.imageUrl || undefined,
+            owner: req.session.user.id
         }
         try{
         await req.storage.createCar(car);
