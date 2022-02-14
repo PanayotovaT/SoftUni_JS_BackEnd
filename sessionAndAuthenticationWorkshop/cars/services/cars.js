@@ -1,3 +1,4 @@
+const res = require('express/lib/response');
 const Car = require('../models/Car');
 const { carViewModel } = require('./util');
 
@@ -58,18 +59,28 @@ async function updateCar(id, car, ownerId) {
 
 }
 
-async function attachAccessory(carId, accessoryId) {
+async function attachAccessory(carId, accessoryId, ownerId) {
     let existing = await Car.findById(carId);
+
+    if (existing.owner != ownerId) {
+        console.log('User is not owner!');
+        return false;
+    }
     existing.accessories.push(accessoryId);
     await existing.save();
+    return true;
 
 
 }
 
-async function deleteCar(id) {
+async function deleteCar(id, ownerId) {
+    const existing = await Car.findById(id).where({isDeleted: false})
+    if(existing.ownerId != ownerId) {
+        return false;
+    } 
     // await Car.findByIdAndDelete(id);
     await Car.findByIdAndUpdate(id, {isDeleted: true });
-
+    return true;
 }
 
 
