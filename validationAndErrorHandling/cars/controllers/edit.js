@@ -17,10 +17,10 @@ module.exports = {
     async post(req,res){
         const id = req.params.id;
         const updatedCar = {
-            name: req.body.name,
-            description: req.body.description,
-            price: Number(req.body.price),
-            imageUrl: req.body.imageUrl
+            name: req.body.name.trim(),
+            description: req.body.description.trim(),
+            price: Number(req.body.price.trim()),
+            imageUrl: req.body.imageUrl.trim()
         }
         try {
             if (await req.storage.updateCar(id, updatedCar, req.session.user.id)) {

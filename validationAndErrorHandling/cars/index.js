@@ -20,6 +20,8 @@ const attach = require('./controllers/attach');
 const { loginGet, loginPost, registerGet, registerPost, logoutGet } = require('./controllers/auth');
 const { isLoggedIn } = require('./services/util');
 
+const { body } = require('express-validator');
+
 start();
 async function start() {
     await initDb();
@@ -39,7 +41,7 @@ app.use(session({
     saveUninitialized: true,
     cookie: { secure: 'auto' }
 }));
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use('/static', express.static('static'));
 app.use(carsService());
 app.use(accessoryService());
@@ -52,7 +54,7 @@ app.post('/create', isLoggedIn(), create.post);
 app.get('/details/:id', details);
 app.route('/delete/:id')
     .get(isLoggedIn(), deleteCar.get)
-    .post(isLoggedIn(),deleteCar.post)
+    .post(isLoggedIn(), deleteCar.post)
 app.route('/edit/:id')
     .get(isLoggedIn(), edit.get)
     .post(isLoggedIn(), edit.post);
@@ -61,14 +63,26 @@ app.route('/accessory')
     .post(isLoggedIn(), accessory.post);
 
 app.route('/attach/:id')
-    .get(isLoggedIn(),attach.get)
+    .get(isLoggedIn(), attach.get)
     .post(isLoggedIn(), attach.post);
 app.route('/login')
     .get(loginGet)
     .post(loginPost);
 app.route('/register')
     .get(registerGet)
-    .post(registerPost);
+    .post(
+        body('username')
+            .notEmpty().withMessage('Username is required field')
+            .isLength({ min: 3 }).withMessage('The username field should be at least 5 characters').bail()
+            .isAlphanumeric().withMessage('Username may contain only letters and numbers!'),
+        body('password')
+            .notEmpty().withMessage('Password is required').bail()
+            .isLength({ min: 3 }).withMessage('The password should be at least 3 characters').bail(),
+        body('repeatPassword')
+            .custom((value, {req} )=> {
+                return value == req.body.password;
+            }).withMessage('Rassword should match the repeat password!'),
+        registerPost);
 app.get('/logout', logoutGet);
 
 app.all('*', notFound);

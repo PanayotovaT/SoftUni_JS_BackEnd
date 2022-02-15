@@ -6,10 +6,10 @@ module.exports = {
     async post(req, res) {
 
         const car = {
-            name: req.body.name,
-            description: req.body.description,
-            price: Number(req.body.price),
-            imageUrl: req.body.imageUrl || undefined,
+            name: req.body.name.trim(),
+            description: req.body.description.trim(),
+            price: Number(req.body.price.trim()),
+            imageUrl: req.body.imageUrl.trim() || undefined,
             owner: req.session.user.id
         }
         try{
