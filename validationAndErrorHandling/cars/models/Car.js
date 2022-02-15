@@ -1,7 +1,7 @@
 const {Schema, model, Types: { ObjectId }} = require('mongoose');
 
 const carSchema = new Schema({
-    name: { type: String, required: true, minlength: 3},
+    name: { type: String, required: [true, 'Car name is required.'], minlength: [3, 'Car name must be at least 3 characters']},
     description: { type: String, default: ''},
     imageUrl: { type: String, default: 'noImage.jpg' },
     price: { type: Number, required: true, min: 0},

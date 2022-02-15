@@ -72,13 +72,17 @@ app.route('/register')
     .get(registerGet)
     .post(
         body('username')
+            .trim()
             .notEmpty().withMessage('Username is required field')
             .isLength({ min: 3 }).withMessage('The username field should be at least 5 characters').bail()
-            .isAlphanumeric().withMessage('Username may contain only letters and numbers!'),
+            .isAlphanumeric().withMessage('Username may contain only letters and numbers!')
+            .toLowerCase(),
         body('password')
+            .trim()
             .notEmpty().withMessage('Password is required').bail()
             .isLength({ min: 3 }).withMessage('The password should be at least 3 characters').bail(),
         body('repeatPassword')
+            .trim()
             .custom((value, {req} )=> {
                 return value == req.body.password;
             }).withMessage('Rassword should match the repeat password!'),

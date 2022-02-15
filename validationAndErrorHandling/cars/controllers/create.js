@@ -12,12 +12,15 @@ module.exports = {
             imageUrl: req.body.imageUrl.trim() || undefined,
             owner: req.session.user.id
         }
-        try{
-        await req.storage.createCar(car);
-        res.redirect('/');
-        } catch(err) {
+        try {
+            await req.storage.createCar(car);
+            res.redirect('/');
+        } catch (errors) {
             console.log('Error createing!')
-            res.redirect('/create');
+          if(errors.name == 'ValidationError') {
+              errors = Object.values(errors.errors).map(e => ({msg: e.message}))
+          }
+            res.render('create', { title: 'Create Listing', errors});
         }
     }
 }

@@ -3,6 +3,13 @@
 </h1>
 <div class="form">
   <form action="/create" method="POST">
+    {{#if errors}}
+    <div>
+      {{#each errors}}
+      <p class="err-msg">{{msg}}</p>
+      {{/each}}
+    </div>
+    {{/if}}
     <label for="name">
       Name
     </label>
@@ -16,7 +23,7 @@
     </label>
     <input type="text" id="image" name="imageUrl" />
     <label for="price">Price</label>
-    <input type="number" id="price" name="price" / >
+    <input type="number" id="price" name="price" />
     <input type="submit" value="Publish" />
   </form>
 </div>
