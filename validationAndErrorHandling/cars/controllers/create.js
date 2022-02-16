@@ -18,10 +18,8 @@ module.exports = {
             await req.storage.createCar(car);
             res.redirect('/');
         } catch (errors) {
-            console.log('Error createing!');
-           console.log(errors.name)
             res.locals.errors = mapError(errors);
-            res.render('create', { title: 'Create Listing'});
+            res.render('create', { title: 'Create Listing', car});
         
         }
     }
