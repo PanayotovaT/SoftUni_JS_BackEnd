@@ -1,6 +1,7 @@
 const { Schema, model} = require('mongoose');
 
 //TODO change user model according to exam description
+//TODO add validation
 const userSchema =  new Schema({
     username: {type: String, required: true},
     hashedPassword: { type: String, required: true}
@@ -14,6 +15,6 @@ userSchema.index({username: 1}, {
     }
 });
 
-const User = model('User', username);
+const User = model('User', userSchema);
 
-model.exports = User;
+module.exports = User;
