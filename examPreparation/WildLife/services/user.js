@@ -29,7 +29,7 @@ async function login(username, password) {
         throw new Error('User does\'nt exist ')
     }
     const hasMatch = await compare(password, user.hashedPassword);
-    if(hasMatch) {
+    if(!hasMatch) {
         throw new Error('Incorrect username or password');
     }
 
