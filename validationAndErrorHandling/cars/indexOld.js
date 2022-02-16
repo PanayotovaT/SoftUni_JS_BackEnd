@@ -17,7 +17,7 @@ const deleteCar = require('./controllers/delete');
 const edit = require('./controllers/edit');
 const accessory = require('./controllers/accessory');
 const attach = require('./controllers/attach');
-const authController = require('./controllers/auth');
+const { loginGet, loginPost, registerGet, registerPost, logoutGet } = require('./controllers/auth');
 const { isLoggedIn } = require('./services/util');
 
 const { body } = require('express-validator');
@@ -65,8 +65,30 @@ app.route('/accessory')
 app.route('/attach/:id')
     .get(isLoggedIn(), attach.get)
     .post(isLoggedIn(), attach.post);
+app.route('/login')
+    .get(loginGet)
+    .post(loginPost);
+app.route('/register')
+    .get(registerGet)
+    .post(
+        body('username')
+            .trim()
+            .notEmpty().withMessage('Username is required field')
+            .isLength({ min: 3 }).withMessage('The username field should be at least 5 characters').bail()
+            .isAlphanumeric().withMessage('Username may contain only letters and numbers!')
+            .toLowerCase(),
+        body('password')
+            .trim()
+            .notEmpty().withMessage('Password is required').bail()
+            .isLength({ min: 3 }).withMessage('The password should be at least 3 characters').bail(),
+        body('repeatPassword')
+            .trim()
+            .custom((value, {req} )=> {
+                return value == req.body.password;
+            }).withMessage('Rassword should match the repeat password!'),
+        registerPost);
+app.get('/logout', logoutGet);
 
-app.use(authController);
 app.all('*', notFound);
 
 app.listen(3000, () => {

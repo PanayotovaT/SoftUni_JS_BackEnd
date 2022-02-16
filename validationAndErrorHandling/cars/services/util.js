@@ -1,4 +1,4 @@
-const bcrypt  = require('bcrypt');
+const bcrypt = require('bcrypt');
 
 function accessoryViewModel(accessory) {
     return {
@@ -20,9 +20,9 @@ function carViewModel(car) {
         price: car.price,
         id: car._id,
         accessories: car.accessories,
-        owner: car.owner 
+        owner: car.owner
     }
-    if(model.accessories.length > 0 && model.accessories[0].name) {
+    if (model.accessories.length > 0 && model.accessories[0].name) {
         model.accessories = model.accessories.map(accessoryViewModel);
     }
     return model;
@@ -30,15 +30,15 @@ function carViewModel(car) {
 
 async function hashPassword(password) {
     return bcrypt.hash(password, 10);
-}   
+}
 
-async function comparePassword(password, hashedPassword){
+async function comparePassword(password, hashedPassword) {
     return bcrypt.compare(password, hashedPassword);
 }
 
-function isLoggedIn(){
+function isLoggedIn() {
 
-    return function(req, res, next) {
+    return function (req, res, next) {
         if (req.session.user) {
             next();
         } else {
@@ -46,11 +46,40 @@ function isLoggedIn(){
         }
     };
 }
+function mapError(error) {
+    if (Array.isArray(error)) {
+        return error;
+    } else if (error.name == 'MongoServerError') {
+        if (error.code == 11000) {
+            return [{
+                msg: 'Username already exists'
+            }];
+        } else {
+            retunrn[{
+                msg: 'Request Error'
+            }];
+        }
+    } else if (error.name == 'ValidationError') {
+        return Object.values(error.errors).map(e => {
+            return ({ msg: e.message })
+        })
+    
+    } else if (typeof error.message == 'string') {
+        return [{
+            msg: error.message
+        }]
+    } else {
+        return [{
+            msg: 'Request Error'
+        }];
+    }
+}
 
 module.exports = {
     accessoryViewModel,
     carViewModel,
     hashPassword,
     comparePassword,
-    isLoggedIn
+    isLoggedIn,
+    mapError
 }
