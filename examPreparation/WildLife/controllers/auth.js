@@ -1,15 +1,16 @@
 const { Router } = require('express');
+const { isUser, isGuest } = require('../middleware/guards');
 const { register, login } = require('../services/user');
 const mapErrors = require('../util/mappers');
 
 const router = Router();
 
-router.get('/register', (req, res) => {
+router.get('/register', isGuest(),(req, res) => {
     res.render('register', {title: 'Register Page'})
 });
 
 //TODO check form, action, method, field names
-router.post('/register', async (req, res) => {
+router.post('/register', isGuest(), async (req, res) => {
     try {
         if (req.body.password != req.body.repeatPassword) {
             throw new Error('Passwords don\'t match!');
@@ -25,12 +26,12 @@ router.post('/register', async (req, res) => {
     }
 })
 
-router.get('/login', (req, res) => {
+router.get('/login', isGuest(), (req, res) => {
     res.render('login', {title: 'Login Page'});
 });
 
 //TODO check form action, method, field names
-router.post('/login', async (req, res) => {
+router.post('/login', isGuest(), async (req, res) => {
 
     try{
         const user = await login(req.body.username, req.body.password);
@@ -42,6 +43,14 @@ router.post('/login', async (req, res) => {
         //TODO Send Error messages
         res.render('login', {data: {username: req.body.username}, errors, title: 'Login Page'})
     }
+});
+
+router.get('/logout', isUser(), (req, res) => {
+    console.log(req.session.user)
+    delete req.session.user;
+    console.log(req.session.user)
+    res.redirect('/');
+    
 })
 
 module.exports = router;
