@@ -18,9 +18,8 @@ const userSchema =  new Schema({
         },
         message:'Last name may contain only english letters!'
     }},
-    email: {type: String, required: [true, 'Please insert an email'], vaidate: {
+    email: {type: String, required: [true, 'Please insert an email'], validate: {
         validator(value) {
-            console.log(EMAIL_PATTERN.test(value))
             return EMAIL_PATTERN.test(value);
         },
         message: 'You must insert a valid email'

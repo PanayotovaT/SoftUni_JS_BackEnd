@@ -12,6 +12,9 @@ router.get('/register', isGuest(),(req, res) => {
 //TODO check form, action, method, field names
 router.post('/register', isGuest(), async (req, res) => {
     try {
+        if(req.body.password == '') {
+            throw new Error('You must insert a password');
+        }
         if (req.body.password != req.body.repeatPassword) {
             throw new Error('Passwords don\'t match!');
         }
