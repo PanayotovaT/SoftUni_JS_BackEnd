@@ -1,6 +1,6 @@
 <section id="details-page">
 
-{{#with post}}
+    {{#with post}}
     <div class="main_card">
         <div class="card_left">
             <div class="card_datails">
@@ -16,17 +16,24 @@
                 <p class="disc">{{description}}</p>
 
                 <!-- If there is no registered user, do not display buttons-->
-              <div class="social-btn">
+                {{#if hasUser}}
+                <div class="social-btn">
                     <!-- Only for registered user and author of the post -->
+                    {{#if isAuthor}}
                     <a href="/edit/{{id}}" class="edit-btn">Edit</a>
                     <a href="/delete{{id}}" class="del-btn">Delete</a>
+                    {{else}}
                     <!-- logged in users, who have not yet voted-->
+                    {{#if hasVoted}}
+                    <p class="thanks-for-vote">Thanks For Voting</p>
+                    {{else}}
                     <a href="#" class="vote-up">UpVote +1</a>
                     <a href="#" class="vote-down">DownVote -1</a>
+                    {{/if}}
                     <!-- logged in user who has already voted-->
-                    <p class="thanks-for-vote">Thanks For Voting</p>
-
+                    {{/if}}
                 </div>
+                {{/if}}
             </div>
         </div>
         <div class="card_right">
