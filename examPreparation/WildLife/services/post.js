@@ -13,9 +13,12 @@ async function getPosts() {
 }
 
 async function getPostById(id) {
-    return await Post.findById(id).populate('author', 'firstName lastName');
+    return await Post.findById(id).populate('author', 'firstName lastName').populate('votes', 'email');
 }
 
+async function getPostsByAuthor(userId) {
+    return await Post.find({author: userId});
+}
 async function updatePost(id, post) {
     let existing = await Post.findById(id);
 
@@ -50,5 +53,6 @@ module.exports = {
     getPostById,
     updatePost,
     deletePost,
-    vote
+    vote,
+    getPostsByAuthor
 }
