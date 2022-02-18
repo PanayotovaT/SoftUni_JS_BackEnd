@@ -112,4 +112,8 @@ router.get('/vote/:id/:type', isUser(), async (req, res) => {
     }
 }) 
 
+router.get('*', (req, res) => {
+    res.render('404', {title: 'Not Found'})
+})
+
 module.exports = router;

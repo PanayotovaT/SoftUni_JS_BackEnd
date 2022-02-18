@@ -17,7 +17,7 @@ async function getPostById(id) {
 }
 
 async function getPostsByAuthor(userId) {
-    return await Post.find({author: userId});
+    return await Post.find({author: userId}).populate('author', '_id firstName lastName');
 }
 async function updatePost(id, post) {
     let existing = await Post.findById(id);
