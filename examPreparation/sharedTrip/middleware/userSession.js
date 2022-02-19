@@ -8,3 +8,5 @@ function userSession() {
         next();
     }
 }
+
+module.exports = userSession;

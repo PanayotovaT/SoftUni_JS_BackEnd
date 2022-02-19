@@ -20,12 +20,14 @@ router.post('/register', isGuest(), async (req, res) => {
         }
         const user = await register(req.body.email, req.body.password, req.body.gender);
         req.session.user = user;
+      
         res.redirect('/'); //TODO check redirect requirements
     } catch (err) {
+        console.log(err);
         //TODO Send Error messages
         const errors = mapErrors(err);
-        console.log(err);
-        res.render('register', {data: {email: req.body.email, gender: req.body.gender}, errors , title: 'Register Page'})
+        const isMale = req.body.gender == 'male';
+        res.render('register', {data: {email: req.body.email, isMale }, errors , title: 'Register Page'})
     }
 })
 
@@ -38,7 +40,9 @@ router.post('/login', isGuest(), async (req, res) => {
 
     try{
         const user = await login(req.body.email, req.body.password);
+        console.log(user)
         req.session.user = user;
+        console.log(req.session)
         res.redirect('/')
     } catch(err) {
         const errors = mapErrors(err);

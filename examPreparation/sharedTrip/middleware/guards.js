@@ -1,6 +1,7 @@
-function isUser(){
+function isUser() {
     return function (req, res, next) {
-        if(req.session.user) {
+        if (req.session.user) {
+            console.log(req.session.user);
             next()
         } else {
             res.redirect('/login');
@@ -8,9 +9,9 @@ function isUser(){
     }
 }
 
-function isGuest(){
+function isGuest() {
     return function (req, res, next) {
-        if(req.session.user) {
+        if (req.session.user) {
             res.redirect('/');
         } else {
             next();
@@ -19,10 +20,10 @@ function isGuest(){
 }
 
 function isOwner() {
-    return function(req, res, next) {
+    return function (req, res, next) {
         const userId = req.session.user?._id;
         //TODO change property name to match collection
-        if(res.locals.data.owner == userId) {
+        if (res.locals.trip.owner == userId) {
             next();
         } else {
             res.redirect('/login');
