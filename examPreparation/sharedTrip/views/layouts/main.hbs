@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -33,6 +34,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/catalog">Shared Trips</a>
                     </li>
+                    {{#if hasUser}}
                     <!-- Logged users -->
                     <li class="nav-item">
                         <a class="nav-link" href="/create">Offer Trip</a>
@@ -40,8 +42,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/profile">Profile</a>
                     </li>
+                    {{else}}
                     <li class="nav-item">
-                        <a class="nav-link" href="/logout">Logout as [ test@abv.bg ]</a>
+                        <a class="nav-link" href="/logout">Logout as [ {{user.email}} ]</a>
                     </li>
                     <!-- Guest users -->
                     <li class="nav-item">
@@ -50,6 +53,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/register">Register</a>
                     </li>
+                    {{/if}}
                 </ul>
             </div>
         </div>

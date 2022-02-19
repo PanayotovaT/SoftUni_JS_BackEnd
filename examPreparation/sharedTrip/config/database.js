@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 require('../models/User');
 
 //TODO Change DB name
-const dbname = 'wildlife';
+const dbname = 'sharedTrips';
 const connectionString = `mongodb://127.0.0.1:27017/${dbname}`;
 
 module.exports = async (app) => {
@@ -11,7 +11,6 @@ module.exports = async (app) => {
         await mongoose.connect(connectionString, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-            // autoIndex: false
         });
         console.log('Database Connected!');
 
