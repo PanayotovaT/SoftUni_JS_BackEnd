@@ -19,8 +19,9 @@ router.get('/trips', async (req, res) => {
 router.get('/trips/:id', preload(true), async (req, res) => {
     const trip = res.locals.trip;
     const userId = req.session.user?._id;
-
     trip.remainingSeats = trip.seats - trip.buddies.length;
+    trip.buddiesList = trip.buddies.map(b => b.email).join(', ');
+    
     if(req.session.user) {
     trip.isOwner = userId == trip.owner._id
         if(trip.buddies.some(x => x._id == userId)) {

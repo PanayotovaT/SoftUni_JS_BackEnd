@@ -15,13 +15,15 @@
             <i class="fas fa-users buddies"></i>
             <h5>Shared trip Buddies</h5>
             <div>
+                <p>
                 <!-- if there are joined buddies for the current trip separate them with comma and space", " -->
-                {{#each trip.buddies}}
-                <p>{{email}}</p>
+                {{#if trip.buddies}}
+                {{trip.buddiesList}}
                 {{else}}
                 <!-- If not display: -->
-                <p>there are no buddies yet...</p>
-                {{/each }}
+                there are no buddies yet...
+                {{/if }}
+                </p>
             </div>
             <h5>Driver: <span>{{trip.owner.email}}</span> </h5>
         </div>

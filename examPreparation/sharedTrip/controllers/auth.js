@@ -12,8 +12,8 @@ router.get('/register', isGuest(),(req, res) => {
 //TODO check form, action, method, field names
 router.post('/register', isGuest(), async (req, res) => {
     try {
-        if(req.body.password.trim() == ''){
-            throw new Error('Password is required');
+        if(req.body.password.trim().length < 4){
+            throw new Error('Password must be at least 4 characters');
         }
         if (req.body.password.trim() != req.body.rePassword.trim()) {
             throw new Error('Passwords don\'t match!');
