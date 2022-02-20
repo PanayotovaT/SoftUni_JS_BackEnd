@@ -17,9 +17,15 @@ router.get('/trips', async (req, res) => {
 });
 
 router.get('/trips/:id', preload(true), async (req, res) => {
-    if(req.session.user) {
-    res.locals.trip.isOwner = req.session.user._id == res.locals.trip.owner._id
+    const trip = res.locals.trip;
+    const userId = req.session.user?._id;
 
+    trip.remainingSeats = trip.seats - trip.buddies.length;
+    if(req.session.user) {
+    trip.isOwner = userId == trip.owner._id
+        if(trip.buddies.some(x => x._id == userId)) {
+            trip.isJoined = true;
+        }
     }
     res.render('details', {title: 'Trip Details'});
 });
