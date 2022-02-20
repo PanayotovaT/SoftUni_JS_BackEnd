@@ -17,8 +17,11 @@ router.get('/trips', async (req, res) => {
 });
 
 router.get('/trips/:id', preload(true), async (req, res) => {
-    console.log(res.locals.trip);
-    res.render('details', {title: 'Trip Details'})
+    if(req.session.user) {
+    res.locals.trip.isOwner = req.session.user._id == res.locals.trip.owner._id
+
+    }
+    res.render('details', {title: 'Trip Details'});
 });
 
 router.get('/profile', isUser(), async (req, res) => {

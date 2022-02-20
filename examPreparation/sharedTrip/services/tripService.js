@@ -26,5 +26,6 @@ module.exports = {
     createTrip,
     getTripById,
     getAllTrips,
-    getMyTrips
+    getMyTrips,
+    getTripAndUsers
 }
