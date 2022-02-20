@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { isUser } = require('../middleware/guards');
+const preload = require('../middleware/preload');
 const { createTrip } = require('../services/tripService');
 const mapErrors = require('../util/mappers');
 
@@ -35,6 +36,11 @@ router.post('/create', isUser(),async (req, res) => {
         const errors = mapErrors(err);
         res.render('create', { title: 'Create Page', errors })
     }
+});
+
+router.get('/edit/:id', preload(), (req, res) => {
+
+    res.render('edit', { title: 'Edit Page'})
 })
 
 
