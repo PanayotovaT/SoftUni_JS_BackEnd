@@ -1,4 +1,4 @@
-const router  = require('express').Router();
+const router = require('express').Router();
 const furnitureService = require('../services/furniture');
 const { mapErrors } = require('../util/mappers');
 
@@ -6,7 +6,7 @@ router.get('/', async (req, res) => {
 
     const data = await furnitureService.getAll();
     res.json(data);
-    
+
 });
 
 router.post('/', async (req, res) => {
@@ -21,22 +21,21 @@ router.post('/', async (req, res) => {
 
     }
 
-    try{
-        const result  = await furnitureService.create(item);
+    try {
+        const result = await furnitureService.create(item);
         res.status(201).json(result);
-    } catch(err) {
+    } catch (err) {
         const error = mapErrors(err).join('\n');
-        console.error(err.message);
-        res.status(400).json({message: error})
+        res.status(400).json({ message: error })
     }
-    console.log('CREATE Catalog');
-    console.log(req.body);
-    res.end();
 });
 
-router.get('/:id', (req, res) => {
-    console.log('READ Record');
-    res.end();
+router.get('/:id', async (req, res) => {
+
+  
+        item = await furnitureService.getOne(req.params.id);
+        res.json(item);
+ 
 });
 
 router.put('/:id', (req, res) => {
