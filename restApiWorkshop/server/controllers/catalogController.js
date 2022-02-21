@@ -52,8 +52,7 @@ router.put('/:id', async (req, res) => {
         const result = await furnitureService.update(req.params.id, item);
         res.json(result);
     } catch (err) {
-        console.log(err.message);
-        console.log(typeof err.message);
+
         const error = mapErrors(err).map(x => x.msg).join('\n');
         res.status(400).json({ message: error })
     }
@@ -62,8 +61,13 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     const itemId = req.params.id;
-    await furnitureService.deleteItem(itemId);
-    res.status(204).end();
+    try {
+        await furnitureService.deleteItem(itemId);
+        res.status(204).end();
+    } catch (err) {
+        const error = mapErrors(err).map(x => x.msg).join('\n');
+        res.status(400).json({ message: error })
+    }
 });
 
 module.exports = router;
