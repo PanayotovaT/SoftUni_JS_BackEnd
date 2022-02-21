@@ -50,19 +50,20 @@ router.put('/:id', async (req, res) => {
     }
     try {
         const result = await furnitureService.update(req.params.id, item);
-        res.status(201).json(result);
+        res.json(result);
     } catch (err) {
         console.log(err.message);
         console.log(typeof err.message);
         const error = mapErrors(err).map(x => x.msg).join('\n');
-        res.status(400).json({ message: error})
+        res.status(400).json({ message: error })
     }
 
 });
 
-router.delete('/:id', (req, res) => {
-    console.log('DELETE Record');
-    res.end();
+router.delete('/:id', async (req, res) => {
+    const itemId = req.params.id;
+    await furnitureService.deleteItem(itemId);
+    res.status(204).end();
 });
 
 module.exports = router;

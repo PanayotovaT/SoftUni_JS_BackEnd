@@ -36,7 +36,7 @@ async function update(id, item){
 }
 
 async function deleteItem(id) {
-
+   await Item.findByIdAndDelete(id);
 }
 
 module.exports = {
