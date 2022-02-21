@@ -1,5 +1,6 @@
 const router  = require('express').Router();
 const furnitureService = require('../services/furniture');
+const { mapErrors } = require('../util/mappers');
 
 router.get('/', async (req, res) => {
 
@@ -24,7 +25,9 @@ router.post('/', async (req, res) => {
         const result  = await furnitureService.create(item);
         res.status(201).json(result);
     } catch(err) {
+        const error = mapErrors(err).join('\n');
         console.error(err.message);
+        res.status(400).json({message: error})
     }
     console.log('CREATE Catalog');
     console.log(req.body);
