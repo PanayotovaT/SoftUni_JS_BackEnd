@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const catalogController = require('./controllers/catalogController');
 
 const cors  = require('./middlewares/cors');
 
@@ -21,6 +22,7 @@ async function start() {
     app.use(express.json());
     app.use(cors());
 
+    app.use('/data/catalog',catalogController);
     app.get('/', (req, res) => res.json({message: 'REST service operational'}))
     app.listen(3030, () => console.log('Rest Service started on port 3030'))
     
