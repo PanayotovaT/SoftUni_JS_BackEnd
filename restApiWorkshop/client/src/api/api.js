@@ -7,6 +7,11 @@ async function request(url, options) {
         const response = await fetch(url, options);
 
         if (response.ok == false) {
+            if(response.status == 498){
+                sessionStorage.removeItem('authToken');
+                sessionStorage.removeItem('email');
+                sessionStorage.removeItem('userId');
+            }
             const error = await response.json();
             throw new Error(error.message);
         }
