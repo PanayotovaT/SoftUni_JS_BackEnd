@@ -1,13 +1,15 @@
-const bcrypt =  require('bcrypt');
-const jwt =require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 const JWT_SECRET = 'adjkiwjna9879safsfl';
 
-async function register(email, password) {
-    const existing = await User.findOne({email: new RegExp(`^${email}$`, 'i')})
+const blacklist = [];
 
-    if(existing) {
+async function register(email, password) {
+    const existing = await User.findOne({ email: new RegExp(`^${email}$`, 'i') })
+
+    if (existing) {
         throw new Error('Email already exists!');
     }
 
@@ -22,13 +24,23 @@ async function register(email, password) {
 }
 
 async function login(email, password) {
+    const user =await User.findOne({ email: new RegExp(`^${email}$`, 'i') });
 
+    if (!user) {
+        throw new Error('Incorrect email or password!')
+    }
+
+    const match = await bcrypt.compare(password, user.hashedPassword);
+
+    if(!match) {
+        throw new Error('Incorrect email or password!')
+    }
 
     return createSession(user);
 }
 
-async function logout(userId) {
-
+async function logout(token) {
+    blacklist.push(token);
 }
 
 
@@ -43,8 +55,21 @@ function createSession(user) {
     };
 }
 
+function verifySession(token) {
+    if(blacklist.includes(token)) {
+        throw new Error('Token is invalidated');
+    }
+    const payload = jwt.verify(token, JWT_SECRET);
+    return {
+        email: payload.email,
+        _id: payload._id,
+        token
+    }
+}
+
 module.exports = {
     register,
     login,
-    logout
+    logout,
+    verifySession
 }

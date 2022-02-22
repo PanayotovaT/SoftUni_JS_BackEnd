@@ -5,7 +5,7 @@ async function getAll() {
 
 }
 
-async function getOne(id) {
+function getOne(id) {
     return Item.findById(id);
 }
 

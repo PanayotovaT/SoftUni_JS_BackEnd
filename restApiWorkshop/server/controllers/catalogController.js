@@ -1,15 +1,17 @@
 const router = require('express').Router();
 const furnitureService = require('../services/furniture');
 const mapErrors = require('../util/mappers');
+const {isAuth, isGuest, isOwner } = require('../middlewares/guards');
+const preload = require('../middlewares/preload');
 
 router.get('/', async (req, res) => {
-
+    console.log(req.user);
     const data = await furnitureService.getAll();
     res.json(data);
 
 });
 
-router.post('/', async (req, res) => {
+router.post('/', isAuth(), async (req, res) => {
     const item = {
         make: req.body.make,
         model: req.body.model,
@@ -17,7 +19,9 @@ router.post('/', async (req, res) => {
         description: req.body.description,
         price: Number(req.body.price),
         img: req.body.img,
-        material: req.body.material
+        material: req.body.material,
+        owner: req.user._id
+
 
     }
 
@@ -30,15 +34,15 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', preload(), (req, res) => {
 
 
-    item = await furnitureService.getOne(req.params.id);
+    item = res.locals.item;
     res.json(item);
 
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', preload(), isOwner(), async (req, res) => {
     const item = {
         make: req.body.make,
         model: req.body.model,
@@ -46,7 +50,7 @@ router.put('/:id', async (req, res) => {
         description: req.body.description,
         price: Number(req.body.price),
         img: req.body.img,
-        material: req.body.material
+        material: req.body.material,
     }
     try {
         const result = await furnitureService.update(req.params.id, item);
@@ -59,7 +63,7 @@ router.put('/:id', async (req, res) => {
 
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id',preload(), isOwner(), async (req, res) => {
     const itemId = req.params.id;
     try {
         await furnitureService.deleteItem(itemId);
