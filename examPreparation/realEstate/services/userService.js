@@ -23,7 +23,7 @@ async function login(username, password) {
     if(!user) {
         throw new Error('Incorrect username or password');
     }
-    const hasMatch = compare(password, user.hashedPassword);
+    const hasMatch = await compare(password, user.hashedPassword);
     if(!hasMatch) {
         throw new Error('Incorrect username or password');
 

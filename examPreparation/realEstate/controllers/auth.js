@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { register, login } = require('../services/userService');
+const mapErrors = require('../util/mappers');
 
 router.get('/register', (req, res) => {
     res.render('register', { title: 'Register Page' });
@@ -8,17 +9,19 @@ router.get('/register', (req, res) => {
 router.post('/register', async (req, res) => {
 
     try {
-        if (req.body.password == '') {
+        if (req.body.password.trim() == '') {
             throw new Error('Password is required!')
         }
-        if (req.body.password != req.body.repass) {
+        if (req.body.password.trim() != req.body.repass) {
             throw new Error('Passwords don\'t match!')
         }
-        const user = await register(req.body.name, req.body.username, req.body.password);
+        const user = await register(req.body.name.trim(), req.body.username.trim().toLowerCase(), req.body.password.trim());
 
         res.redirect('/');
     } catch (err) {
         console.log(err);
+        const errors = mapErrors(err);
+        res.render('register', { title: 'Register Page', data: {name: req.body.name, username: req.body.username }, errors})
         
     }
 
@@ -31,10 +34,12 @@ router.get('/login', (req, res) => {
 
 router.post('/login', async (req, res) => {
     try {
-        const user = await login(req.body.username, req.body.password);
+        const user = await login(req.body.username.trim().toLowerCase(), req.body.password.trim());
         res.redirect('/');
     } catch(err) {
-        console.log(err)
+        console.log(err);
+        const errors = mapErrors(err);
+        res.render('login', {title: 'Login Page', data: {username: req.body.username}, errors})
     }
 })
 
