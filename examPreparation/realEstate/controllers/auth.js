@@ -16,7 +16,10 @@ router.post('/register', async (req, res) => {
             throw new Error('Passwords don\'t match!')
         }
         const user = await register(req.body.name.trim(), req.body.username.trim().toLowerCase(), req.body.password.trim());
-        req.seesion.user = user;
+        console.log(user);
+        req.session.user = user;
+        console.log(res.locals);
+
         res.redirect('/');
     } catch (err) {
         console.log(err);
@@ -35,8 +38,8 @@ router.get('/login', (req, res) => {
 router.post('/login', async (req, res) => {
     try {
         const user = await login(req.body.username.trim().toLowerCase(), req.body.password.trim());
-        req.session.user=  user;
-        console.log(req.session);
+        req.session.user =  user;
+        console.log(req.session.user);
         res.redirect('/');
     } catch(err) {
         console.log(err);

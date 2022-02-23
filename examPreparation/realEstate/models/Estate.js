@@ -7,7 +7,7 @@ const estateSchema = new Schema({
     city: {type: String, required: [true, 'City is required field']},
     homeImg: {type: String, required: [true, 'Home Image is required field']},
     description: {type: String, required: [true, 'Description is required field']},
-    availablePieces: {type: Number, required: [true, 'Available Pieces is required field']},
+    pieces: {type: Number, required: [true, 'Available Pieces is required field']},
     Rented: {type: [ObjectId], default: []},
     owner: {type: ObjectId, ref: 'User'},
 });
