@@ -6,7 +6,7 @@ async function getAll() {
 };
 
 async function getOne(id){
-    return await Estate.findById(id).populate('rented', 'name, _id').populate('owner', '_id, name').lean();
+    return await Estate.findById(id).populate('owner', '_id name').populate('rented', '_id name').lean();
 }
 
 async function create(estate){
@@ -15,21 +15,39 @@ async function create(estate){
 }
 
 async function edit(id, estate) {
+    const existing = await Estate.findById(id);
 
+    existing.name =estate.name;
+    existing.type =estate.type;
+    existing.year =estate.year;
+    existing.city =estate.city;
+    existing.homeImg =estate.homeImg;
+    existing.description =estate.description;
+    existing.pieces =estate.pieces;
+    existing.rented =estate.rented;
+
+    await existing.save();
 }
 
 async function deleteEstate(id) {
     await Estate.findByIdAndDelete(id);
 }
 
-async function getMyEstates(userId) {
-
+async function rentEstate(estateId, userId) { 
+    const estate = await Estate.findById(estateId);
+    if(estate.rented.includes(userId) ) {
+        throw new Error('You already rented this estate!');
+    }
+    estate.rented.push(userId);
+    await estate.save();
 }
 
 module.exports = {
     getAll,
     getOne,
     create,
-    deleteEstate
+    deleteEstate,
+    edit,
+    rentEstate
 
 }
