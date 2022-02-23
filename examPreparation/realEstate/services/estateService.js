@@ -41,12 +41,17 @@ async function rentEstate(estateId, userId) {
     await estate.save();
 }
 
+async function search(type) {
+    const result = await Estate.find({type}).lean();
+    return result;
+}
 module.exports = {
     getAll,
     getOne,
     create,
     deleteEstate,
     edit,
-    rentEstate
+    rentEstate,
+    search
 
 }
