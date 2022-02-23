@@ -24,7 +24,6 @@ async function edit(id, estate) {
     existing.homeImg =estate.homeImg;
     existing.description =estate.description;
     existing.pieces =estate.pieces;
-    existing.rented =estate.rented;
 
     await existing.save();
 }

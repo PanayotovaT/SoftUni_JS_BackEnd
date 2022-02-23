@@ -1,13 +1,14 @@
+const { isUser } = require('../middleware/guards');
 const { create, getOne, deleteEstate, edit, rentEstate } = require('../services/estateService');
 const mapErrors = require('../util/mappers');
 
 const router = require('express').Router();
 
-router.get('/create', (req, res) => {
+router.get('/create', isUser(), (req, res) => {
     res.render('create', { title: 'Create Page' });
 });
 
-router.post('/create', async (req, res) => {
+router.post('/create', isUser(), async (req, res) => {
 
     const estate = {
         name: req.body.name,
@@ -29,7 +30,7 @@ router.post('/create', async (req, res) => {
     }
 })
 
-router.get('/edit/:id', async (req, res) => {
+router.get('/edit/:id', isUser(), async (req, res) => {
 
     const id = req.params.id;
     const data = await getOne(id);
@@ -41,7 +42,7 @@ router.get('/edit/:id', async (req, res) => {
     res.render('edit', { title: 'Edit Page', data });
 });
 
-router.post('/edit/:id', async (req, res) => {
+router.post('/edit/:id', isUser(), async (req, res) => {
 
     const id = req.params.id;
     const data = {
@@ -52,6 +53,7 @@ router.post('/edit/:id', async (req, res) => {
         homeImg: req.body.homeImg,
         description: req.body.description,
         pieces: Number(req.body.pieces),
+       
     }
     try {
         const existing = await getOne(id);
@@ -70,7 +72,7 @@ router.post('/edit/:id', async (req, res) => {
     }
 });
 
-router.get('/delete/:id', async (req, res) => {
+router.get('/delete/:id', isUser(), async (req, res) => {
     const id = req.params.id;
     const estate = await getOne(id);
     const isOwner = estate.owner._id == req.session.user?._id;
@@ -82,7 +84,7 @@ router.get('/delete/:id', async (req, res) => {
     res.redirect('/catalog')
 })
 
-router.get('/rent/:id', async (req, res) => {
+router.get('/rent/:id', isUser(), async (req, res) => {
     const id = req.params.id;
     const userId = req.session.user._id;
     try {   

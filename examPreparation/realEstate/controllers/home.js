@@ -1,5 +1,6 @@
 const { getAll, getOne } = require('../services/estateService');
 
+
 const router = require('express').Router();
 
 router.get('/', async (req, res) => {
@@ -8,7 +9,7 @@ router.get('/', async (req, res) => {
     res.render('home', { title: 'Home Page', estates});
 });
 
-router.get('/catalog',async (req, res) => {
+router.get('/catalog', async (req, res) => {
     const estates = await getAll();
     res.render('catalog', { title: 'Catalog Page', estates})
 });
