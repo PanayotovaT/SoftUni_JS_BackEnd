@@ -1,10 +1,16 @@
-const { create } = require('../services/estateService');
+const { create, getOne, deleteEstate } = require('../services/estateService');
 const mapErrors = require('../util/mappers');
 
 const router = require('express').Router();
 
-router.get('/details/:id', (req, res) => {
-    res.render('details', { title: 'Details Page' })
+router.get('/details/:id', async (req, res) => {
+
+    
+    const estate = await getOne(req.params.id);
+    const isOwner = estate.owner._id == req.session.user?._id;
+    res.locals.isOwner = isOwner;
+    estate.rented = estate.rented.join(', ');
+    res.render('details', { title: 'Details Page', ...estate })
 });
 
 router.get('/create', (req, res) => {
@@ -37,4 +43,10 @@ router.get('/edit', (req, res) => {
     res.render('edit', { title: 'Edit Page' });
 });
 
+router.get('/delete', async (req, res) => {
+    await deleteEstate(req.params.id);
+    res.redirect('/catalog')
+})
+
+router.p
 module.exports = router;

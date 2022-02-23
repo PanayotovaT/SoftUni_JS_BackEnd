@@ -1,11 +1,16 @@
+const { getAll } = require('../services/estateService');
+
 const router = require('express').Router();
 
-router.get('/', (req, res) => {
-    res.render('home', { title: 'Home Page'})
+router.get('/', async (req, res) => {
+    
+    const estates = (await getAll()).slice(-3);
+    res.render('home', { title: 'Home Page', estates});
 });
 
-router.get('/catalog', (req, res) => {
-    res.render('catalog', { title: 'Catalog Page'})
+router.get('/catalog',async (req, res) => {
+    const estates = await getAll();
+    res.render('catalog', { title: 'Catalog Page', estates})
 });
 
 router.get('/search', (req, res) => {

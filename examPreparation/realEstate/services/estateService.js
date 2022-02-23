@@ -6,7 +6,7 @@ async function getAll() {
 };
 
 async function getOne(id){
-    return await Estate.findById(id).lean();
+    return await Estate.findById(id).populate('rented', 'name, _id').populate('owner', '_id, name').lean();
 }
 
 async function create(estate){
@@ -18,8 +18,8 @@ async function edit(id, estate) {
 
 }
 
-async function deleteEstate(id, estate) {
-
+async function deleteEstate(id) {
+    await Estate.findByIdAndDelete(id);
 }
 
 async function getMyEstates(userId) {
@@ -29,6 +29,7 @@ async function getMyEstates(userId) {
 module.exports = {
     getAll,
     getOne,
-    create
+    create,
+    deleteEstate
 
 }
