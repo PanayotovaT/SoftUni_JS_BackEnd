@@ -8,40 +8,44 @@
 </head>
 
 <body>
-
+    {{#if errors}}
     <div id="container">
         <div>
             <div class="notification loadingBox">
                 Loading …
             </div>
+
             <div class="notification infoBox">
                 <span>Info</span>
             </div>
+            {{#each errors}}
             <div class="notification errorBox">
-                <span>Error</span>
+                <span>{{msg}}</span>
             </div>
+            {{/each}}
         </div>
-
+        {{/if}}
         <nav>
             <!--guest-->
             <div class="left-container">
                 <ul>
-                    <li><a href="">Home</a></li>
-                    <li><a href="">Login</a></li>
-                    <li><a href="">Register</a></li>
+                    <li><a href="/">Home</a></li>
+                    {{#if hasUser}}
+                    <li><a href="/create">Add +</a></li>
+                    {{else}}
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="/register">Register</a></li>
+                    {{/if}}
+
                 </ul>
             </div>
-            {{!-- home --}}
-             <div class="left-container">
-                <ul>
-                    <li><a href="">Home</a></li>
-                    <li><a href="">Add +</a></li>
-                </ul>
-            </div>
+
+            {{#if hasUser}}
             <div class="right-container">
-                <a href="" class="log-out">{{name}}</a>
-                <a href="" class="log-out">Logout</a>
+                <a href="/profile" class="log-out">NAME</a>
+                <a href="/logout" class="log-out">Logout</a>
             </div>
+            {{/if}}
         </nav>
 
         {{{body}}}
