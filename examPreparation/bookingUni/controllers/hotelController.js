@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const mapErrors = require('../util/mappers');
-const { create, deleteHotel, update } = require('../services/hotelService');
+const { create, deleteHotel, update, bookHotel } = require('../services/hotelService');
 const preload = require('../middlewares/preload');
 const { isOwner, isUser } = require('../middlewares/guards');
 
@@ -8,7 +8,7 @@ router.get('/create', isUser(), (req, res) => {
     res.render('create', { title: 'Create Page' });
 });
 
-router.post('/create', isUser(),async (req, res) => {
+router.post('/create', isUser(), async (req, res) => {
     const data = {
         name: req.body.name.trim(),
         city: req.body.city.trim(),
@@ -27,11 +27,11 @@ router.post('/create', isUser(),async (req, res) => {
     }
 });
 
-router.get('/edit/:id',isUser(), preload(), isOwner(),  (req, res) => {
+router.get('/edit/:id', isUser(), preload(), isOwner(), (req, res) => {
     res.render('edit', { title: 'Edit Page' });
 });
 
-router.post('/edit/:id',isUser(), preload(), isOwner(), async (req, res) => {
+router.post('/edit/:id', isUser(), preload(), isOwner(), async (req, res) => {
     const id = req.params.id;
     const hotel = {
         name: req.body.name.trim(),
@@ -40,21 +40,33 @@ router.post('/edit/:id',isUser(), preload(), isOwner(), async (req, res) => {
         imgUrl: req.body.imgUrl.trim()
     }
 
-    try{
+    try {
         await update(req.params.id, hotel);
         res.redirect('/details/' + id)
-    } catch(err) {
+    } catch (err) {
         console.log(err);
         const errors = mapErrors(err);
         hotel._id = id;
-        res.render('edit', { title: 'Edit Page', errors, hotel});
+        res.render('edit', { title: 'Edit Page', errors, hotel });
     }
 })
 
 router.get('/delete/:id', isUser(), preload(), isOwner(), async (req, res) => {
-
-    await deleteHotel(req.params.id);
+    await deleteHotel(req.params.id, res.locals.hotel.owner);
     res.redirect('/');
+});
+
+router.get('/book/:id', isUser(), async (req, res) => {
+
+    try {
+        await bookHotel(req.params.id, req.session.user._id)
+    } catch (err) {
+        console.log(err)
+    } finally {
+        res.redirect('/details/' + req.params.id);
+
+    }
+
 })
 
 module.exports = router;
