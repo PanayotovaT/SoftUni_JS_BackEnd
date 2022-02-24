@@ -1,5 +1,6 @@
 const { isUser } = require('../middlewares/guards');
 const { getAll, getOne, hasBooked } = require('../services/hotelService');
+const { getUserById } = require('../services/authService');
 const preload = require('../middlewares/preload');
 
 const router = require('express').Router();
@@ -22,7 +23,13 @@ router.get('/details/:id', isUser(), preload(),async (req, res) => {
     res.render('details', { title: 'Details Page'});
 });
 
-router.get('/profile', isUser(), (req, res) => {
-    res.render('profile', { title: 'Profile Page' });
+router.get('/profile', isUser(), async (req, res) => {
+    const user = await getUserById(req.session.user._id);
+    console.log(user);
+    user.bookingList  = user.bookedHotels.map(x => x.name).join(', ');
+
+
+    res.render('profile', { title: 'Profile Page', user });
 });
+
 module.exports = router;

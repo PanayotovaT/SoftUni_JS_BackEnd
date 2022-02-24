@@ -14,9 +14,13 @@ router.post('/register', isGuest(), async (req, res) => {
     const username = req.body.username.trim().toLowerCase();
     const password = req.body.password.trim();
     const rePassword = req.body.rePassword.trim();
+    const PASSWORD_REGEX = /^[A-Za-z0-9]+$/;
     try {
-        if (password == '') {
-            throw new Error('Password is required!')
+        if (password.length < 5) {
+            throw new Error('Password should be at least 5 characters!')
+        }
+        if(!PASSWORD_REGEX.test(password)){
+            throw new Error('Please inser a valid password!')
         }
         if (password != rePassword) {
             throw new Error('Passwords don\'t match!')

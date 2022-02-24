@@ -41,7 +41,13 @@ async function findUserByUsername(username) {
     return await User.findOne({username});
 }
 
+async function getUserById(id) {
+
+    return User.findById(id).populate('bookedHotels', 'name').lean();
+    
+}
 module.exports = {
     register,
-    login
+    login,
+    getUserById
 }
