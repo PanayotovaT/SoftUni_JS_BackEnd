@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const mapErrors = require('../util/mappers');
-const { create, deleteHotel } = require('../services/hotelService');
+const { create, deleteHotel, update } = require('../services/hotelService');
 const preload = require('../middlewares/preload');
 const { isOwner } = require('../middlewares/guards');
 
@@ -30,6 +30,26 @@ router.post('/create', async (req, res) => {
 router.get('/edit/:id', preload(), isOwner(),  (req, res) => {
     res.render('edit', { title: 'Edit Page' });
 });
+
+router.post('/edit/:id', preload(), isOwner(), async (req, res) => {
+    const id = req.params.id;
+    const hotel = {
+        name: req.body.name.trim(),
+        city: req.body.city.trim(),
+        freeRooms: Number(req.body.freeRooms),
+        imgUrl: req.body.imgUrl.trim()
+    }
+
+    try{
+        await update(req.params.id, hotel);
+        res.redirect('/details/' + id)
+    } catch(err) {
+        console.log(err);
+        const errors = mapErrors(err);
+        hotel._id = id;
+        res.render('edit', { title: 'Edit Page', errors, hotel});
+    }
+})
 
 router.get('/delete/:id', preload(), isOwner(), async (req, res) => {
 

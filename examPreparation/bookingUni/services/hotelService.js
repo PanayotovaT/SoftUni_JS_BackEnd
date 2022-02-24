@@ -14,7 +14,7 @@ async function create(hotel) {
 }
 
 async function update(id, hotel) {
-    const existing = Hotel.findById(id);
+    const existing = await Hotel.findById(id);
 
     existing.name = hotel.name;
     existing.city = hotel.city;
