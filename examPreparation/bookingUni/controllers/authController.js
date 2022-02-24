@@ -1,13 +1,14 @@
 const mapErrors = require('../util/mappers');
 const { register, login } = require('../services/authService');
+const { isGuest, isUser } = require('../middlewares/guards');
 
 const router = require('express').Router();
 
-router.get('/register', (req, res) => {
+router.get('/register', isGuest(), (req, res) => {
     res.render('register', { title: 'Register Page' });
 });
 
-router.post('/register', async (req, res) => {
+router.post('/register', isGuest(), async (req, res) => {
 
     const email = req.body.email.trim().toLowerCase();
     const username = req.body.username.trim().toLowerCase();
@@ -31,11 +32,11 @@ router.post('/register', async (req, res) => {
     }
 })
 
-router.get('/login', (req, res) => {
+router.get('/login', isGuest(),(req, res) => {
     res.render('login', { title: 'Login Page' });
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', isGuest(), async (req, res) => {
     const username = req.body.username.trim().toLowerCase();
     const password = req.body.password.trim();
     try {
@@ -49,7 +50,7 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.get('/logout', (req, res) => {
+router.get('/logout', isUser(), (req, res) => {
     delete req.session.user;
     res.redirect('/')
 });

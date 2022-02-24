@@ -2,13 +2,13 @@ const router = require('express').Router();
 const mapErrors = require('../util/mappers');
 const { create, deleteHotel, update } = require('../services/hotelService');
 const preload = require('../middlewares/preload');
-const { isOwner } = require('../middlewares/guards');
+const { isOwner, isUser } = require('../middlewares/guards');
 
-router.get('/create', (req, res) => {
+router.get('/create', isUser(), (req, res) => {
     res.render('create', { title: 'Create Page' });
 });
 
-router.post('/create', async (req, res) => {
+router.post('/create', isUser(),async (req, res) => {
     const data = {
         name: req.body.name.trim(),
         city: req.body.city.trim(),
@@ -27,11 +27,11 @@ router.post('/create', async (req, res) => {
     }
 });
 
-router.get('/edit/:id', preload(), isOwner(),  (req, res) => {
+router.get('/edit/:id',isUser(), preload(), isOwner(),  (req, res) => {
     res.render('edit', { title: 'Edit Page' });
 });
 
-router.post('/edit/:id', preload(), isOwner(), async (req, res) => {
+router.post('/edit/:id',isUser(), preload(), isOwner(), async (req, res) => {
     const id = req.params.id;
     const hotel = {
         name: req.body.name.trim(),
@@ -51,7 +51,7 @@ router.post('/edit/:id', preload(), isOwner(), async (req, res) => {
     }
 })
 
-router.get('/delete/:id', preload(), isOwner(), async (req, res) => {
+router.get('/delete/:id', isUser(), preload(), isOwner(), async (req, res) => {
 
     await deleteHotel(req.params.id);
     res.redirect('/');
