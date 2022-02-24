@@ -5,7 +5,7 @@ async function getAll() {
 }
 
 async function getOne(id) {
-    return await Hotel.findById(id).lean;
+    return await Hotel.findById(id).populate('bookings', '_id email').lean();
 }
 
 async function create(hotel) {

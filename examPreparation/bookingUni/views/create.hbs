@@ -2,13 +2,13 @@
     <h2>Add new hotel</h2>
     <form id="formAddhotel" action="/create" method="POST">
         <label for="hotel">Hotel name:</label>
-        <input type="text" id="hotel" name="hotel" placeholder="Hotel name" value="{{data.hotel}}">
+        <input type="text" id="hotel" name="name" placeholder="Hotel name" value="{{data.name}}">
         <label for="city">City:</label>
         <input type="text" id="city" name="city" placeholder="City" value="{{data.city}}">
         <label for="free-rooms">Free rooms:</label>
-        <input type="number" id="free-rooms" name="freeRooms" placeholder="Free rooms" value="{{freeRooms}}">
+        <input type="number" id="free-rooms" name="freeRooms" placeholder="Free rooms" value="{{data.freeRooms}}">
         <label for="imgUrl">Image:</label>
-        <input type="text" id="imgUrl" name="imgUrl" placeholder="https://" value="{{imgUrl}}">
+        <input type="text" id="imgUrl" name="imgUrl" placeholder="https://" value="{{data.imgUrl}}">
 
         <input type="submit" class="create" value="Add">
     </form>
