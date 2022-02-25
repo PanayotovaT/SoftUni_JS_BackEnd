@@ -42,6 +42,16 @@ async function deleteTutorial(id) {
     await Tutorial.findByIdAndDelete(id);
 }
 
+async function enrollToTutorial(tutorialId, userId) {
+    const tutorial = await Tutorial.findById(tutorialId);
+
+    if(tutorial.enrolledUsers.includes(userId)) {
+        throw new Error('You are already enrolled');
+    }
+    tutorial.enrolledUsers.push(userId);
+
+    await tutorial.save()
+}
 // async function joinTrip(tripId, userId) {
 //     const trip = await Trip.findById(tripId);
     
@@ -62,5 +72,5 @@ module.exports = {
     deleteTutorial,
     update,
     getOnePopulated,
-    // joinTrip
+    enrollToTutorial
 }

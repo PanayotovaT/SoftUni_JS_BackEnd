@@ -16,11 +16,14 @@
             <h3 class="my-3">Description</h3>
             <p>{{tutorial.description}}</p>
             {{#if tutorial.isOwner}}
-            <a class="btn btn-danger" href="/delte/{{tutorial._id}}">Delete</a>
+            <a class="btn btn-danger" href="/delete/{{tutorial._id}}">Delete</a>
             <a class="btn btn-warning" href="/edit/{{tutorial._id}}">Edit</a>
             {{else}}
+            {{#if tutorial.isEnrolled}}
             <span class="enrolled-span">You are already enrolled</span>
+            {{else}}
             <a class="btn btn-primary" href="/enroll/{{tutorial._id}}">Enroll</a>
+            {{/if}}
             {{/if}}
 
         </div>

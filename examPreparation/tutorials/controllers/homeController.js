@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
         });
         res.render('userHome', {title: 'Home Page', tutorials})
     } else {
-        tutorials.sort((a, b) => b.enrolledUsers.length - a.enrolledUsers.length).slice(0, 3);
+        tutorials = tutorials.sort((a, b) => b.enrolledUsers.length - a.enrolledUsers.length).slice(0, 3);
         tutorials.map(x => x.enrolledUsersNum = x.enrolledUsers.length);
         res.render('guestHome', {title: 'Home Page', tutorials})
         
@@ -26,7 +26,10 @@ router.get('/', async (req, res) => {
 
 router.get('/details/:id', isUser(), preload(), (req, res) => {
     
-    res.locals.tutorial.isOwner = res.locals.tutorial.owner == req.session.user._id; 
+    res.locals.tutorial.isOwner = res.locals.tutorial.owner == req.session.user._id;
+    console.log(res.locals.tutorial.enrolledUsers.includes(req.session.user._id));
+    console.log(Boolean(res.locals.tutorial.enrolledUsers.includes(req.session.user._id)));
+    res.locals.tutorial.isEnrolled = res.locals.tutorial.enrolledUsers.includes(req.session.user._id);
     res.render('details', {title: 'Details Page'})
 })
 module.exports = router;
