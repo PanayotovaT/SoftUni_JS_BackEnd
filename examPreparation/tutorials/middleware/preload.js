@@ -1,11 +1,11 @@
 //Replace with actual service
 const tutorialService = require('../services/tutorialService');
 
-function preload(populate) {
+function preload() {
     return async function (req, res, next) {
         const id = req.params.id;
 
-        res.locals.tutorial = await tripService.getOne(id);
+        res.locals.tutorial = await tutorialService.getOne(id);
 
 
         next()

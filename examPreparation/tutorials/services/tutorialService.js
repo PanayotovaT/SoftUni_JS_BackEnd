@@ -8,6 +8,11 @@ async function getAll() {
 async function getOne (id) {
     return Tutorial.findById(id).lean();
 }
+async function getOnePopulated (id) {
+
+    return Tutorial.findById(id).populate('owner', 'username _id').lean();
+}
+
 
 async function getTutorialEnrolledUsers (id) {
     return Tutorial.findById(id).populate('enrolledUsers','_id username').lean();
@@ -56,5 +61,6 @@ module.exports = {
     getUserEnrolledCourses,
     deleteTutorial,
     update,
+    getOnePopulated,
     // joinTrip
 }
