@@ -55,7 +55,7 @@ function mapError(error) {
                 msg: 'Username already exists'
             }];
         } else {
-            retunrn[{
+            return[{
                 msg: 'Request Error'
             }];
         }

@@ -1,4 +1,3 @@
-const res = require('express/lib/response');
 const Car = require('../models/Car');
 const { carViewModel } = require('./util');
 
