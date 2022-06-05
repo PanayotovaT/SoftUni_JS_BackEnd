@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+require('../models/User');
+require('../models/Publication');
+
 const databaseString = 'mongodb://127.0.0.1:27017/gallery';
 
 module.exports = async (app) => {
