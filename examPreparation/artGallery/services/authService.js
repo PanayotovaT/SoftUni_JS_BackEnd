@@ -3,7 +3,7 @@ const { hash, compare } = require('bcrypt');
 
 async function register(username, password, address) {
     const existingUser = await getUserByUsername(username);
-    if(existingUser) {
+    if(existingUser.username) {
         throw new Error('Incorrect username or password!')
     }
 
@@ -14,7 +14,6 @@ async function register(username, password, address) {
         address
     });
     await user.save();
-
     return user;
 }
 
