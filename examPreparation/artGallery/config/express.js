@@ -19,6 +19,6 @@ module.exports = (app) => {
         }
     }));
     app.use(express.urlencoded({extended: true}));
-    app.user(userSession());
+    app.use(userSession());
 
 }
