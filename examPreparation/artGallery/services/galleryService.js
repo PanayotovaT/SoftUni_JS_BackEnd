@@ -18,7 +18,7 @@ async function createPublication(publication) {
 
 async function updatePublication(id, publication) {
     const existingPublication = await Publication.findById(id);
-
+    console.log('existing',existingPublication);
     existingPublication.title = publication.title;
     existingPublication.technique = publication.technique;
     existingPublication.imageUrl = publication.imageUrl;

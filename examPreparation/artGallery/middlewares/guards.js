@@ -23,7 +23,8 @@ function isGuest () {
 
 function isOwner() {
     return function (req, res, next) {
-        const isOwner = req.params.id == req.session.user?._id;
+        const isOwner = res.locals.publication.author._id == req.session.user?._id;
+        console.log(isOwner, 'isOwner')
         if (isOwner) {
             next();
         } else {

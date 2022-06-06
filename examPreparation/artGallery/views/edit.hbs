@@ -3,21 +3,21 @@
         <!-- Do not forget to change the path to the image -->
         <img src="/static/style/img/blog-img12.jpg" alt="image">
 
-        <form action="/edit-publication" method="POST" class="container-text">
+        <form action="/edit-publication/{{publication._id}}" method="POST" class="container-text">
             <h2>Edit</h2>
             <p>Edit your masterpiece!</p>
 
             <label for="title">Title:</label>
-            <input type="text" id="title" name="title" value="">
+            <input type="text" id="title" name="title" value="{{publication.title}}">
 
             <label for="painting-tech">Painting technique:</label>
-            <input type="text" id="painting-tech" name="technique" value="">
+            <input type="text" id="painting-tech" name="technique" value="{{publication.technique}}">
 
             <label for="picture">Art picture:</label>
-            <input type="text" id="picture" name="imageUrl" value="">
+            <input type="text" id="picture" name="imageUrl" value="{{publication.imageUrl}}">
 
             <label for="certificate">Certificate of authenticity:</label>
-            <input type="text" id="certificate" name="certificate" value="">
+            <input type="text" id="certificate" name="certificate" value="{{publication.certificate}}">
 
             <button class="edit-btn">Edit</button>
         </form>

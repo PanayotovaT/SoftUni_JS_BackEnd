@@ -39,7 +39,26 @@ router.get('/details/:id', preload(), (req, res) => {
 
 })
 
+router.get('/edit-publication/:id', preload(), isOwner(), (req, res) => {
+    res.render('edit', {title: 'Edit Page'});
+});
 
+router.post('/edit-publication/:id', preload(), isOwner(), async (req, res) => {
+    const publication = {
+        title: req.body.title,
+        technique: req.body.technique,
+        imageUrl: req.body.imageUrl,
+        certificate: req.body.certificate,
+    }
+
+    try{
+        await galleryService.updatePublication(req.params.id, publication);
+        res.redirect('/details/' + req.params.id);
+    }catch(err) {
+        console.log(err)
+        res.render('edit', {title: 'Edit page', publication});
+    }
+})
 
 module.exports = router;
 
