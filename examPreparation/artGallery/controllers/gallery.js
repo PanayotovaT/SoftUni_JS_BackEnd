@@ -58,6 +58,17 @@ router.post('/edit-publication/:id', preload(), isOwner(), async (req, res) => {
         console.log(err)
         res.render('edit', {title: 'Edit page', publication});
     }
+});
+
+router.get('/delete-publication/:id', preload(), isOwner(), async (req, res) => {
+    console.log(req.params.id);
+    try {
+        await galleryService.deletePublication(req.params.id);
+        res.redirect('/');
+    }catch(err) {
+        console.log(err);
+        res.redirect('/details/' + req.params.id);
+    }
 })
 
 module.exports = router;
