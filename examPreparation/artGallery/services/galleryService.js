@@ -6,7 +6,7 @@ async function getPublications() {
 }
 
 async function getPublication(id) {
-    const publication = await Publication.findById(id).lean();
+    const publication = await Publication.findById(id).populate('author').lean();
     return publication;
 }
 
