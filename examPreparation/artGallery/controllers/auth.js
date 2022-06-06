@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const { register } = require('../services/authService');
+const { login } = require('../services/authService');
 const router = Router();
 
 router.get('/register', (req, res) => {
@@ -45,5 +46,24 @@ router.get('/login', (req, res) => {
     res.render('login', { title: 'Login Page' });
 });
 
+router.post('/login', async (req, res) => {
+    const username = req.body.username.trim();
+    const password = req.body.password.trim();
+
+    try {
+        const user  = await login(username, password);
+        req.session.user = user;
+        res.redirect('/')
+
+    } catch (err) {
+        console.log(err);
+        res.redirect('/login');
+    }
+})
+
+router.get('/logout', (req, res) => {
+    delete req.session.user;
+    res.redirect('/login');
+})  
 
 module.exports = router;

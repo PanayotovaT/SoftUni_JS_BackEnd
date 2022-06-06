@@ -3,7 +3,7 @@ const { hash, compare } = require('bcrypt');
 
 async function register(username, password, address) {
     const existingUser = await getUserByUsername(username);
-    if(existingUser.username) {
+    if(existingUser) {
         throw new Error('Incorrect username or password!')
     }
 
@@ -18,12 +18,11 @@ async function register(username, password, address) {
 }
 
 async function login(username, password) {
-    const existingUser =  getUserByUsername(username);
+    const existingUser =  await getUserByUsername(username);
     if(!existingUser) {
         throw new Error('Incorrect username or password!');
     }
-
-    const hasMatch = compare(password, existingUser.hashedPassword);
+    const hasMatch = await compare(password, existingUser.hashedPassword );
 
     if(!hasMatch) {
         throw new Error('Incorrect username or password!')
@@ -33,7 +32,7 @@ async function login(username, password) {
 }
 
 async function getUserByUsername(username) {
-    const user = await User.find({username: new RegExp(`^${username}$`, 'i')});
+    const user = await User.findOne({username: new RegExp(`^${username}$`, 'i')});
     return user;
 }
 

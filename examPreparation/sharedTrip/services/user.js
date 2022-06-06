@@ -36,7 +36,8 @@ async function login(email, password) {
 
 //TODO identify user by given identifier
 async function getUserByEmail(email) {
-    const user =await User.findOne({ email: new RegExp(`^${email}$`, 'i') })
+    const user =await User.findOne({ email: new RegExp(`^${email}$`, 'i') });
+    console.log(user, 'USER')
     return user;
 }
 
