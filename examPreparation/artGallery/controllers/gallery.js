@@ -1,15 +1,16 @@
 const { Router } = require('express');
 const galleryService = require('../services/galleryService');
 const preload = require('../middlewares/preload');
+const { isUser, isOwner } = require('../middlewares/guards');
 
 const router = Router();
 
 
-router.get('/create-publication', (req, res ) => {
+router.get('/create-publication', isUser(), (req, res ) => {
     res.render('create', {title: 'Create Page'});
 });
 
-router.post('/create-publication', async (req, res) => {
+router.post('/create-publication', isUser(), async (req, res) => {
     const title = req.body.title.trim();
     const technique = req.body.technique.trim();
     const imageUrl = req.body.imageUrl.trim();
@@ -31,7 +32,9 @@ router.post('/create-publication', async (req, res) => {
     }  
 });
 
-router.get('/details/:id',preload(), (req, res) => {
+router.get('/details/:id', preload(), (req, res) => {
+    const isOwner = res.locals.publication.author._id == req.session.user?._id;
+    res.locals.isOwner = isOwner;
     res.render('details', {title: 'Details Page'})
 
 })

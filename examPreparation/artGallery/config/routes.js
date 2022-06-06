@@ -4,6 +4,12 @@ const galleryController = require('../controllers/gallery');
 
 module.exports = (app) => {
     app.use(authController);
-    app.use(galleryController);
     app.use(homeController);
+    app.use(galleryController);
+
+
+    app.get('*', (req, res) => {
+        res.render('404', { title: 'Page Not Found'});
+    });
 }
+

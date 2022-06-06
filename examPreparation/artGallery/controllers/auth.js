@@ -1,13 +1,14 @@
 const { Router } = require('express');
 const { register } = require('../services/authService');
 const { login } = require('../services/authService');
+const {isGuest, isUser } = require('../middlewares/guards');
 const router = Router();
 
-router.get('/register', (req, res) => {
+router.get('/register', isGuest(), (req, res) => {
     res.render('register', { title: 'Register Page' });
 })
 
-router.post('/register', async (req, res) => {
+router.post('/register', isGuest(), async (req, res) => {
 
     const username = req.body.username.trim();
     const password = req.body.password.trim();
@@ -42,16 +43,17 @@ router.post('/register', async (req, res) => {
     }
 });
 
-router.get('/login', (req, res) => {
+router.get('/login', isGuest(), (req, res) => {
     res.render('login', { title: 'Login Page' });
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', isGuest(), async (req, res) => {
     const username = req.body.username.trim();
     const password = req.body.password.trim();
 
     try {
         const user  = await login(username, password);
+    
         req.session.user = user;
         res.redirect('/')
 
@@ -61,7 +63,7 @@ router.post('/login', async (req, res) => {
     }
 })
 
-router.get('/logout', (req, res) => {
+router.get('/logout',  isUser(), (req, res) => {
     delete req.session.user;
     res.redirect('/login');
 })  

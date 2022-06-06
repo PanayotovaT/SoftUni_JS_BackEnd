@@ -5,7 +5,7 @@ const router = Router();
 
 router.get('/', async (req, res) => {
     const publications = await galleryService.getPublications();
-
+    console.log(res.locals.hasUser);
     res.render('home', {title: 'Home Page', publications});
 });
 
@@ -14,8 +14,5 @@ router.get('/gallery', async (req, res) => {
     res.render('gallery', {title: 'Gallery', publications});
 })
 
-router.get('*', (req, res) => {
-    res.render('404', { title: 'Page Not Found'});
-})
 
 module.exports = router;
