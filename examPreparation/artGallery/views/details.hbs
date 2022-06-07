@@ -17,9 +17,13 @@
                 <a href="/delete-publication/{{publication._id}}" class="btn-delete">Delete</a>
                 <!-- logged in user who has not yet shared the publication-->
                 {{else}}
-                <a href="/share-publication" class="btn-share">Share publication</a>
+                {{#if alreadyShared}}
                 <!-- logged in user who has already shared the publication-->
                 <p class="shared-pub">You already shared this publication</p>
+                {{else}}
+                <a href="/share-publication/{{publication._id}}" class="btn-share">Share publication</a>
+                {{/if}}
+
                 {{/if}}
             </div>
             {{/if}}

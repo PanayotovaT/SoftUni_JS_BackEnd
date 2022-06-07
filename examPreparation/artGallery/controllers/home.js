@@ -5,7 +5,6 @@ const router = Router();
 
 router.get('/', async (req, res) => {
     const publications = await galleryService.getPublications();
-    console.log(res.locals.hasUser);
     res.render('home', {title: 'Home Page', publications});
 });
 

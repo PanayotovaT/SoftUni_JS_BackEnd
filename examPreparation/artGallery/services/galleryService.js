@@ -34,6 +34,11 @@ async function deletePublication(id) {
 
 async function sharePublication(publicationId, userId) {
 
+    const publication = await Publication.findById(publicationId);
+   
+    publication.sharedBy.push(userId);
+
+    await publication.save();
 }
 
 module.exports = {
