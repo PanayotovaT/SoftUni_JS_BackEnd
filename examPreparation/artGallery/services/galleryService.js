@@ -41,11 +41,23 @@ async function sharePublication(publicationId, userId) {
     await publication.save();
 }
 
+async function myPublications(userId) {
+    const publications = await Publication.find({author: userId});
+    return publications;
+}
+
+async function sharedByMePublications(userId) {
+    const publications = await Publication.find().all('sharedBy', [`${userId}`]);
+    return publications;
+ }
+
 module.exports = {
     getPublications,
     getPublication,
     createPublication,
     updatePublication,
     deletePublication,
-    sharePublication
+    sharePublication,
+    myPublications,
+    sharedByMePublications
 }
