@@ -4,7 +4,7 @@ const { ServerApiVersion } = require('mongodb');
 require('../models/Ad');
 require('../models/User');
 
-const connectionString = 'mongodb+srv://xela:123@database.ftbm5qz.mongodb.net/?retryWrites=true&w=majority/Database';
+const connectionString = 'mongodb+srv://xela:123@database.ftbm5qz.mongodb.net/?retryWrites=true&w=majority';
 
 module.exports  = async (app) => {
     try {

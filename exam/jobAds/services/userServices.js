@@ -7,7 +7,7 @@ async function register(email, password, skill) {
         throw new Error('Incorrect email or password!');
     }
 
-    const hashedPassword = hash(password, 10);
+    const hashedPassword = await hash(password, 10);
 
     const newUser = new User({
         email,
