@@ -1,12 +1,17 @@
 const mongoose = require('mongoose');
+const { ServerApiVersion } = require('mongodb');
 
-const connectionString = 'mongodb://127.0.0.1:27017/ads';
+require('../models/Ad');
+require('../models/User');
+
+const connectionString = 'mongodb+srv://xela:123@database.ftbm5qz.mongodb.net/?retryWrites=true&w=majority';
 
 module.exports  = async (app) => {
     try {
         await mongoose.connect(connectionString,  {
             useNewUrlParser: true,
-            useUnifiedTopology: true
+            useUnifiedTopology: true,
+            serverApi: ServerApiVersion.v1
         });
         console.log('Database connected');
 
