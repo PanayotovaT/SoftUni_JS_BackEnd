@@ -9,6 +9,17 @@ module.exports = (app) => {
         extname: '.hbs'
     }).engine);
     app.set('view engine', '.hbs');
+    app.use('/static', express.static('static'));
+    app.use(session({
+        secret: 'my secret',
+        resave: false,
+        saveUninitialized: true,
+        cookie: {
+            secure: 'auto'
+        }
+    }));
+    app.use(express.urlencoded({extended: true}));
+    app.use(userSession);
 
 }
 
