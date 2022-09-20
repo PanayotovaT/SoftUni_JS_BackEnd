@@ -7,7 +7,7 @@ router.get('/create', (req, res)=> {
     res.render('create', {title: 'Create Page'});
 });
 
-router.post('/create', (req, res) => {
+router.post('/create', async (req, res) => {
     const ad =
         {
             headline: req.body.headline,
@@ -16,8 +16,10 @@ router.post('/create', (req, res) => {
             description: req.body.description,
             author: req.session.user._id
         };
-    try {
 
+    try {
+        await create(ad);
+        res.redirect('/');
     }catch(err){
         console.log(err);
         const errors = mapErrors(err);
