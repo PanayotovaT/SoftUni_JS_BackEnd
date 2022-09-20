@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const connectionString = 'mongodb+srv://xela:123@cluster0.keitx.mongodb.net/?retryWrites=true&w=majority'
+const connectionString = 'mongodb://127.0.0.1:27017/ads';
 
 module.exports  = async (app) => {
     try {
