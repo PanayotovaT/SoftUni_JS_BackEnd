@@ -4,7 +4,6 @@ const mapErrors = require('../util/mappers');
 
 
 router.get('/register', (req, res) => {
-
     res.render('register', { title: 'Register Page' });
 });
 
@@ -14,7 +13,7 @@ router.post('/register', async (req, res) => {
     const password = req.body.password.trim();
     const repass = req.body.rePassword.trim();
     const skill = req.body.skill.trim();
-    
+
     try {
 
         if (password.length < 5) {
@@ -36,10 +35,27 @@ router.post('/register', async (req, res) => {
 })
 
 
-router.get('/login', (req, res) => {
+router
+    .get('/login', (req, res) => {
 
     res.render('login', { title: 'Login Page' });
-})
+    })
+    .post('/login', async (req, res) => {
+        const email = req.body.email.trim();
+        const password = req.body.password.trim();
+
+        try{
+            const user = await login(email, password);
+            req.render.session.user = user;
+            res.redirect('/');
+
+        } catch(err) {
+            console.log(err)
+            const errors = mapErrors(err);
+
+            res.render('/login', {title: 'LoginPage', errors, data: {email}})
+        }
+    })
 
 
 module.exports = router;
