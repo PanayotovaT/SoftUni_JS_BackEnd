@@ -20,16 +20,17 @@ async function register(email, password, skill) {
 
 async function login(email, password) {
     const existingUser =  await getUserByEmail(email);
+
     if(!existingUser) {
         throw new Error('Incorrect email or password!')
     }
-    const hasMatch = await compare(password, existingUser.hashedPassword);
 
+    const hasMatch = await compare(password, existingUser.hashedPassword);
     if(!hasMatch) {
         throw new Error('Incorrect email or password');
     }
 
-    return user;
+    return existingUser;
 }
 
 async function getUserByEmail(email) {
