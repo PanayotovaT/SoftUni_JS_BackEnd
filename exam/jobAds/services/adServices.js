@@ -18,7 +18,7 @@ async function create(ad) {
 
 async function update(id, ad) {
     const existing  = await Ad.findById(id);
-
+    console.log(existing);
     existing.headline = ad.headline;
     existing.location = ad.location;
     existing.company = ad.company;
