@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
-const { create, deleteAd, update, applyToAd, getSearch } = require('../services/adServices');
-const { isUser } = require('../middlewares/guards');
+const { create, delItem, update, applyToAd, getSearch } = require('../services/adServices');
+const { isUser, isOwner } = require('../middlewares/guards');
 const preload = require('../middlewares/preload');
 const mapErrors = require('../util/mappers');
 
@@ -52,6 +52,19 @@ router
             const errors = mapErrors(err);
             res.render('edit', {title: 'Update Page', ad, errors})
         }
+    });
+
+    router.get('/delete/:id', preload(), isUser(), isOwner(), async (req, res) => {
+        let id = req.params.id;
+       
+        try {
+            await delItem(id);
+            res.redirect('/ads');
+        }catch(err) {
+            console.log(err);
+            return;
+        }
+
     })
 
 
