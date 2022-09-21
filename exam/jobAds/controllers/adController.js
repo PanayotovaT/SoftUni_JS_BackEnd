@@ -65,8 +65,23 @@ router
             return;
         }
 
-    })
+    });
 
+router.get('/apply/:id', isUser(), async (req, res) => {
+    const id  = req.params.id;
+
+    try {
+        await applyToAd(id, req.session.user._id);
+    } catch(err) {
+        console.log(err)
+    } finally{
+        res.redirect('/details/' +id)
+    }
+})
+
+router.get('/search', isUser(), async( req, res) => {
+    res.render('search', { title: 'Search Page'})
+});
 
 
 
