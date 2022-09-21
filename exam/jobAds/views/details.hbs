@@ -42,14 +42,14 @@
 <!--This section should only be visible to the author of the current ad-->
 {{#if isOwner}}
 
+{{#if candidates}}
 <section id="info-about-candidates">
     <h2>Candidates for this ad:</h2>
     <!\--If there are people who have applied, show each of them in the following format--\>
-        {{#if candidates}}
         {{#each candidates}}
         {{> candidatePreview}}
         {{/each}}
-        {{/if}}
         <!\--If not, you don't need to visualize anything further-\->
 </section>
+{{/if}}
 {{/if}}
