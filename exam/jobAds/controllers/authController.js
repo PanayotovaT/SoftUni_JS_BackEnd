@@ -1,13 +1,14 @@
 const router = require('express').Router();
 const { register, login } = require('../services/userServices');
+const { isUser, isGuest } =  require('../middlewares/guards');
 const mapErrors = require('../util/mappers');
 
 
 router
-    .get('/register', (req, res) => {
+    .get('/register', isGuest(), (req, res) => {
         res.render('register', { title: 'Register Page' });
     })
-    .post('/register', async (req, res) => {
+    .post('/register', isGuest(), async (req, res) => {
 
         const email = req.body.email.trim();
         const password = req.body.password.trim();
@@ -36,11 +37,11 @@ router
 
 
 router
-    .get('/login', (req, res) => {
+    .get('/login', isGuest(), (req, res) => {
 
         res.render('login', { title: 'Login Page' });
     })
-    .post('/login', async (req, res) => {
+    .post('/login', isGuest(), async (req, res) => {
         const email = req.body.email.trim();
         const password = req.body.password.trim();
 
@@ -57,7 +58,7 @@ router
         }
     });
 
-router.get('/logout', (req, res) => {
+router.get('/logout', isUser(), (req, res) => {
     delete req.session.user;
     res.redirect('/');
 })
